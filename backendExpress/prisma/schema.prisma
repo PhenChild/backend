@@ -10,8 +10,70 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model TblVarible {
-  idVariable Int  @default(autoincrement()) @id
-  nombre String   
+model tblUsuario {
+  idUser String  @id 
+  password String
+  nombre String
+  apellido String
+  telefono String
+  correo String
+}
 
+model tblAdmin {
+  idAdmin Int @id @default(autoincrement())
+  idUser String
+}
+
+model tblEstacion {
+  idEstacion Int @id @default(autoincrement())
+  nombreEstacion String
+}
+
+model TblVarible {
+  idVariable Int  @id @default(autoincrement()) 
+  nombre String
+  unidad String   
+  maximo Int
+  minimo Int
+  tipoDato Int
+}
+
+model tblHorario {
+  idHorario Int @id @default(autoincrement())
+  tipoHora String
+  hora DateTime
+}
+
+
+model tblObeservador {
+  idObservador Int @id @default(autoincrement())
+  idUSer String
+  idObsJefe Int
+  idEstacion Int
+}
+
+
+model tblImagenes {
+  idImagenes Int @id
+  idEstacion Int
+  descripcion String?
+  img String?
+} 
+
+model TblVariblePorEstacion {
+  idItem Int @id @default(autoincrement())
+  idEstacion Float
+  idVariable Int
+  idHorario Int
+  enabled Boolean
+}
+
+model tblRegistro {
+ idValor Int @id @default(autoincrement())
+ idPlantilla String
+ valor String
+ iseditable Boolean 
+ fecha DateTime 
+ lat Float
+ lon Float
 }
