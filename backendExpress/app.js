@@ -1,3 +1,6 @@
+const {PrismaClient } = require('@prisma/client');  
+exports.prisma = new PrismaClient();
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');

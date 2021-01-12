@@ -22,6 +22,7 @@ model tblUsuario {
 model tblAdmin {
   idAdmin Int @id @default(autoincrement())
   idUser String
+  tblUsuario  tblUsuario  @relation(fields: [idUser], references: [idUser])
 }
 
 model tblEstacion {
@@ -47,9 +48,10 @@ model tblHorario {
 
 model tblObeservador {
   idObservador Int @id @default(autoincrement())
-  idUSer String
+  idUser String
   idObsJefe Int
   idEstacion Int
+  tblUsuario  tblUsuario  @relation(fields: [idUser], references: [idUser])
 }
 
 
@@ -58,22 +60,24 @@ model tblImagenes {
   idEstacion Int
   descripcion String?
   img String?
+  tblEstacion  tblEstacion  @relation(fields: [idEstacion], references: [idEstacion])
 } 
-
-model TblVariblePorEstacion {
-  idItem Int @id @default(autoincrement())
-  idEstacion Float
-  idVariable Int
-  idHorario Int
-  enabled Boolean
-}
 
 model tblRegistro {
  idValor Int @id @default(autoincrement())
- idPlantilla String
+ idPlantilla Int
  valor String
  iseditable Boolean 
  fecha DateTime 
  lat Float
  lon Float
+ tblVariblePorEstacion  tblVariblePorEstacion  @relation(fields: [idPlantilla], references: [idItem])
+}
+
+model tblVariblePorEstacion {
+  idItem Int @id @default(autoincrement())
+  idEstacion Float
+  idVariable Int
+  idHorario Int
+  enabled Boolean
 }
