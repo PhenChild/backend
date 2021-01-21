@@ -12,7 +12,7 @@ const cors = require("cors");
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var estacionesRouter = require('./routes/estaciones');
-var observadoresRouter = require('./routes/observadores');
+var observadoresRouter = require('./routes/observador');
 var variableRouter = require('./routes/variable');
 
 var app = express();

@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const observadorController = require("../controllers/observador.controller.js");
 
-router.get('/all', estacionesController.showObservador) ;
+router.get('/all', observadorController.showObservador) ;
 
 router.post('/new', function(req, res, next){
     observadorController.createObservador(req.body);

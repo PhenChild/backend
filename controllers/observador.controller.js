@@ -21,7 +21,7 @@ async function showObservador(req,res) {
     //console.dir(allEstaciones, { depth: null });
 }
 
-async function findEstacion(idEst) {
+async function findObservador(idEst) {
     //const allEstaciones = await prisma.estacion.findMany()
         prisma.tblObservador.findMany({
             where: { idEstacion: idEst }
@@ -31,7 +31,7 @@ async function findEstacion(idEst) {
     //console.dir(allEstaciones, { depth: null });
 }
 
-async function updateEstacion(idEst, nom) {
+async function updateObservador(idEst, nom) {
     const estacion = await prisma.tblObservador.update({
       where: { idEstacion: idEst },
       data: { nombre: nom },
@@ -39,7 +39,7 @@ async function updateEstacion(idEst, nom) {
     console.log(estacion);
   }
 
-async function deleteEstacion(idEst) {
+async function deleteObservador(idEst) {
     await prisma.tblObservador.delete({
         where: { idEstacion: idEst }
     })
