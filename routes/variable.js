@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const variableController = require("../controllers/observador.controller.js");
+const variableController = require("../controllers/variable.controller.js");
 
 router.get('/all', variableController.showVariable) ;
 
