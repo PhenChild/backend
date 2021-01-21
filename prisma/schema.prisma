@@ -3,7 +3,7 @@
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
+  url      = ""
 }
 
 generator client {
@@ -36,7 +36,7 @@ model tblVariable {
   unidad String   
   maximo Int
   minimo Int
-  tipoDato Int
+  tipoDato String
 }
 
 model tblHorario {
@@ -46,7 +46,7 @@ model tblHorario {
 }
 
 
-model tblObeservador {
+model tblObservador {
   idUser String  @id 
   password String
   nombre String
@@ -54,6 +54,7 @@ model tblObeservador {
   telefono String
   correo String
   idObsJefe String
+  isJefe Boolean
   idEstacion Int
   tblEstacion  tblEstacion  @relation(fields: [idEstacion], references: [id])
 }

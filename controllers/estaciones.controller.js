@@ -5,9 +5,9 @@ async function createEstacion(body) {
         data: {
             codigoEstacion: body.codigo,
             nombreEstacion: body.nombre,
-            latitud: body.latitud,
-            longitud: body.longitud,
-            altitud: body.altitud,
+            latitud: parseFloat(body.latitud),
+            longitud: parseFloat(body.longitud),
+            altitud: parseFloat(body.altitud),
             suelo: body.suelo,
             omm: body.omm
         }

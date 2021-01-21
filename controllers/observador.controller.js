@@ -8,7 +8,7 @@ async function createObservador(body) {
             apellido: body.apellido,
             telefono: body.telefono,
             correo: body.correo,
-            estacion: body.idEstacion
+            estacion: parseInt(body.idEstacion,10)
         }
     })
 }
