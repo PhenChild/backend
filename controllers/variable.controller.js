@@ -5,8 +5,8 @@ async function createVariable(body) {
         data: {
             nombre: body.nombre,
             unidad: body.unidad,
-            maximo: parseInt(body.apellido,10),
-            minimo: parseInt(body.telefono),
+            maximo: parseInt(body.max,10),
+            minimo: parseInt(body.min,10),
             tipoDato: body.tipoDato
         }
     })

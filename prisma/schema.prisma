@@ -3,7 +3,7 @@
 
 datasource db {
   provider = "mysql"
-  url      = "mysql://root:josue123@localhost:3306/phenchild"
+  url      = "mysql://root:Garchomp_69@localhost:3306/phenchild"
 }
 
 generator client {
