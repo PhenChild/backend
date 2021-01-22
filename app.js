@@ -16,6 +16,7 @@ var observadoresRouter = require('./routes/observador');
 var variableRouter = require('./routes/variable');
 var horarioRouter = require('./routes/horario');
 var variablePorEstacionRouter = require('./routes/variableEstacion');
+var registroRouter = require('./routes/registro');
 
 var app = express();
 
@@ -46,6 +47,7 @@ app.use('/observadores', observadoresRouter);
 app.use('/variable', variableRouter);
 app.use('/horario', horarioRouter);
 app.use('/variablePorEstacion', variablePorEstacionRouter);
+app.use('/registro', registroRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
