@@ -3,10 +3,10 @@ const prisma = require("../app.js").prisma;
 async function createVariablePorEstacion(body) {
     await prisma.tblVariablePorEstacion.create({
         data: {
-            idEstacion: body.idEstacion,
-            idVariable: body.idVariable,
-            idHorario: body.idHorario,
-            enabled: body.enabled
+            idEstacion: parseInt(body.idEstacion,10),
+            idVariable: parseInt(body.idVariable,10),
+            idHorario: parseInt(body.idHorario,10),
+            enabled: parseInt(body.enabled,10)
         }
     })
 }

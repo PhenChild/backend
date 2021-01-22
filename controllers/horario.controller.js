@@ -4,7 +4,7 @@ async function createHorario(body) {
     await prisma.tblHorario.create({
         data: {
             tipoHora: body.tipoHora,
-            hora: Date.parse(body.hora)
+            hora: body.hora
         }
     })
 }
