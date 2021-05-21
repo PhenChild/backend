@@ -1,20 +1,21 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('User', {
+    await queryInterface.createTable('Horario', {
       id: {
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4,
         allowNull: false,
-        primaryKey: true
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
       },
-      email: {
-        type: Sequelize.STRING
-      },
-      role: {
+      tipoHora: {
         type: Sequelize.ENUM,
-        values: ['admin', 'observer', 'viewer', 'user'],
-        defaultValue: 'user'
+        values: ['diario', 'parcial'],
+        allowNull: false,
+        defaultValue: 'diario'
+      },
+      hora: {
+        type: Sequelize.TIME
       },
       createdAt: {
         allowNull: false,
@@ -27,6 +28,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('User');
+    await queryInterface.dropTable('Horario');
   }
 };

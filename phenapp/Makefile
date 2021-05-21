@@ -1,3 +1,7 @@
+#!/bin/sh
+n=1
+all: model
+
 basic-model:
 	sequelize model:generate --name $(name) user --attributes email:string
 migrate:
@@ -8,14 +12,19 @@ down-all:
 	sequelize db:migrate:undo:all
 down-all-to:
 	sequelize db:migrate:undo:all --to $(limit)
-test:
-	for number in $(list) ; do \
-        echo $$number ; \
-    done
-basic-model2:
-	att = "";
-	for i in range(len($(attrs))) ; do \
-        att = att+ attrs[i]+":"+ ; \
-    done
-	sequelize model:generate --name $(name) user --attributes email:string
-
+model:
+	n=1;\
+	for a in $(attrs) ; do \
+		if [ $$n = 1 ]; then\
+			att=`expr $$a:string`;\
+		else\
+        	att=`expr $$att","$$a:string`; \
+		fi;\
+		n=`expr $$n+1`;\
+    done;\
+	echo $$att;\
+	sequelize model:generate --name $(name) --attributes $$att
+migration-file:
+	sequelize migration:create --name $(name)
+init:
+	DEBUG=phenapp:* npm start

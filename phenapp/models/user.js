@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   };
-  user.init({
+  User.init({
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     nombre: DataTypes.STRING,
@@ -25,7 +25,8 @@ module.exports = (sequelize, DataTypes) => {
      }
   }, {
     sequelize,
-    modelName: 'user',
+    modelName: 'User',
+    tableName: 'User',
   });
-  return user;
+  return User;
 };
