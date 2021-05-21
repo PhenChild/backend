@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  postgres:
+    image: $DB_IMAGE:$DB_VERSION
+    container_name: postgres_phen
+    restart: unless-stopped
+    ports:
+        - "5430:5432"
+    environment:
+        - POSTGRES_USER=$DB_USER
+        - POSTGRES_PASSWORD=$DB_PASSWORD
+        - POSTGRES_DB=postgres
+    volumes:
+        - $DB_LOCAL_PATH:$DB_CONTAINER_PATH
+# volumes:
+#   postgres:
+
+   

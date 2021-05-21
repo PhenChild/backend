@@ -1,0 +1,5 @@
+CREATE ROLE "phenuser" WITH LOGIN PASSWORD '123.456';
+ALTER USER phenuser WITH SUPERUSER;
+CREATE DATABASE "dev-phendb"; 
+\c dev-phendb;
+CREATE EXTENSION postgis;
