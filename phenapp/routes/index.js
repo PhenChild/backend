@@ -3,6 +3,7 @@ var router = express.Router();
 
 let landing = require('../controllers/landing.controller');
 let estacion = require('../controllers/estacion.controller');
+let user = require('../controllers/user.controller');
 let observador = require('../controllers/observador.controller');
 let variable = require('../controllers/variable.controller');
 let variableEstacion = require('../controllers/variableEstacion.controller');
@@ -12,6 +13,10 @@ router.post('/',landing.get_landing);
 router.get('/getEstaciones', estacion.getEstaciones);
 router.post('/newEstacion', estacion.createEstacion);
 router.post('/',landing.submit_lead);
+
+// User
+router.get('/getUsers', user.getUser);
+router.post('/newUser', user.createUser);
 
 // Observadores
 router.get('/getObservadores', observador.getObservador);
