@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Observador.belongsTo(models.Observador);
       Observador.belongsTo(models.Estacion);
+      Observador.belongsTo(models.User);
     }
   };
   Observador.init({
