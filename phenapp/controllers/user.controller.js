@@ -9,13 +9,14 @@ exports.getUser = async function(req, res, next) {
   }
 
 exports.createUser = async function(req, res, next) {
-  await estaciones.create({
+  console.log(req.body);
+  await user.create({
     email: req.body.email,
     password: req.body.password,
     nombre: req.body.nombre,
     apellido: req.body.apellido,
-    telefono: req.body.telefono,
-    correo: req.body.correo
+    telefono: req.body.telefono
+
     })
     .catch(err => res.json(err))
   }
