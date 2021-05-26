@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Observador.belongsTo(models.Observador);
+      Observador.belongsTo(models.Observador, {as:'jefe'});
       Observador.belongsTo(models.Estacion);
       Observador.belongsTo(models.User);
     }

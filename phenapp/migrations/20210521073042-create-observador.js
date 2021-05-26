@@ -11,7 +11,7 @@ module.exports = {
       isJefe: {
         type: Sequelize.BOOLEAN
       },
-      usedId: {
+      userId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'User',

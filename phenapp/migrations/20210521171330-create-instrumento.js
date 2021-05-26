@@ -1,26 +1,14 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Variable', {
-      id: {
+    await queryInterface.createTable('Instrumento', {
+      codigo: {
+        unique:true,
+        type: Sequelize.STRING,
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
       },
       nombre: {
-        type: Sequelize.STRING
-      },
-      unidad: {
-        type: Sequelize.STRING
-      },
-      maximo: {
-        type: Sequelize.FLOAT
-      },
-      minimo: {
-        type: Sequelize.FLOAT
-      },
-      tipoDato: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -34,6 +22,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Variable');
+    await queryInterface.dropTable('Instrumento');
   }
 };

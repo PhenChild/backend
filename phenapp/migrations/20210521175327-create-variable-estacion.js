@@ -32,6 +32,14 @@ module.exports = {
         },
         allowNull: false
       },
+      instrumentoId: {
+        type: Sequelize.STRING,
+        references: {
+          model: 'Instrumento',
+          key: 'codigo'
+        },
+        allowNull: false
+      },
       enable:{
         allowNull: false,
         type: Sequelize.BOOLEAN,

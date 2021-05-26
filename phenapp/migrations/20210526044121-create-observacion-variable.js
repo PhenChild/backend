@@ -1,27 +1,29 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Variable', {
+    await queryInterface.createTable('ObservacionVariable', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      nombre: {
+      valor: {
         type: Sequelize.STRING
       },
-      unidad: {
-        type: Sequelize.STRING
+      eventoClima: {
+        type: Sequelize.ENUM,
+        values: ['Granizada', 'Nevada', 'Niebla', 'Tormenta Electrica','Ninguno'],
+        defaultValue: 'Ninguno'
       },
-      maximo: {
-        type: Sequelize.FLOAT
+      isEditable: {
+        type: Sequelize.BOOLEAN
       },
-      minimo: {
-        type: Sequelize.FLOAT
+      fechaObservacion: {
+        type: Sequelize.DATE
       },
-      tipoDato: {
-        type: Sequelize.STRING
+      posicionObservacion: {
+        type: Sequelize.GEOMETRY
       },
       createdAt: {
         allowNull: false,
@@ -34,6 +36,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Variable');
+    await queryInterface.dropTable('ObservacionVariable');
   }
 };

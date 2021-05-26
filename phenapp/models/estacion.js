@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Estacion.init({
-    codigoEstacion: {type:DataTypes.STRING,unique:true},
+    codigoEstacion: {type:DataTypes.STRING,unique:true,primaryKey:true},
     nombreEstacion: DataTypes.STRING,
     posicion: DataTypes.GEOMETRY,
     altitud: DataTypes.FLOAT,

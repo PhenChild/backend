@@ -27,4 +27,4 @@ model:
 migration-file:
 	sequelize migration:create --name $(name)
 init:
-	DEBUG=phenapp:* npm start
+	npm start

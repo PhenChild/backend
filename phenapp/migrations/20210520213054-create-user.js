@@ -11,6 +11,18 @@ module.exports = {
       email: {
         type: Sequelize.STRING
       },
+      password: {
+        type: Sequelize.STRING
+      },
+      nombre: {
+        type: Sequelize.STRING
+      },
+      apellido: {
+        type: Sequelize.STRING
+      },
+      telefono: {
+        type: Sequelize.STRING
+      },
       role: {
         type: Sequelize.ENUM,
         values: ['admin', 'observer', 'viewer', 'user'],
