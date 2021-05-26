@@ -1,4 +1,6 @@
 const user = require('../models').User
+const jwt = require('jsonwebtoken');
+const jwtPass = "clave";
 
 exports.getUser = async function(req, res, next) {
     await user.findAll()
@@ -20,3 +22,28 @@ exports.createUser = async function(req, res, next) {
     })
     .catch(err => res.json(err))
   }
+
+exports.loginUser = async function(req, res, err) {
+  console.log(req.body);
+  let e = req.body.email;
+  let p = req.body.password;
+  let userLogin = await user.findOne({
+      where: {
+        email: e,
+        password: p,
+        role: "admin"
+      }
+    })
+  console.log(userLogin);
+  if (userLogin == null) res.send("error")
+  else {
+    let token = jwt.sign({
+      email: e,
+      password: p
+    },
+    jwtPass,
+    {expiresIn: '30'}
+    )
+    res.json(token);
+  }
+}

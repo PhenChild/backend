@@ -9,10 +9,11 @@ exports.getEstaciones = async function(req, res, next) {
   }
 
 exports.createEstacion = async function(req, res, next) {
+  console.log(req.body);
   let point = {type: 'Point', coordinates: [parseFloat(req.body.latitud), parseFloat(req.body.longitud)]}
   await estaciones.create({
-    codigoEstacion: req.body.codigo,
-    nombreEstacion: req.body.nombre,
+    codigoEstacion: req.body.codigoEstacion,
+    nombreEstacion: req.body.nombreEstacion,
     posicion: point,
     altitud: parseFloat(req.body.altitud),
     suelo: req.body.suelo,

@@ -8,6 +8,15 @@ let observador = require('../controllers/observador.controller');
 let variable = require('../controllers/variable.controller');
 let variableEstacion = require('../controllers/variableEstacion.controller');
 
+// Login
+router.post("/login", user.loginUser);
+
+// Logout
+router.post('/logout', function (req, res) {
+    console.log(req.body);
+    res.json('OK');
+  })
+
 // Estaciones
 router.post('/',landing.get_landing);
 router.get('/getEstaciones', estacion.getEstaciones);
