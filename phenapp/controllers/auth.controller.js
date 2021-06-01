@@ -55,7 +55,6 @@ exports.signin = (req, res) => {
     var userRole = "ROLE_" + user.role.toUpperCase();
     res.status(200).send({
       id: user.id,
-      username: user.username,
       email: user.email,
       role: userRole,
       accessToken: token

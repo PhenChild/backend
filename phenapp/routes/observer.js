@@ -7,11 +7,13 @@ var router = express.Router();
 let observador = require('../controllers/observador.controller');
 
 router.get('/getAll', observador.getAll);
+
 router.get(
     "/get",
-    [authJwt.verifyToken, authJwt.isObserver],
+    [authJwt.verifyToken],
     observador.getObserver
   );
+  
 router.post(
     '/new', 
     [authJwt.verifyToken, authJwt.isAdmin],

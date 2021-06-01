@@ -7,10 +7,18 @@ const { authJwt } = require("../middleware");
 router.post('/signup', [
     verifySignUp.checkDuplicateEmail,
     verifySignUp.checkRoleExisted,
+    authJwt.isAdmin,
+    authJwt.verifyToken, 
     
   ],
   auth.signup);
 
 router.post("/signin", auth.signin);
+
+router.post("/signinAdmin", [authJwt.isAdmin],
+auth.signin);
+
+router.post("/signinObs", [authJwt.isObserver],
+auth.signin);
 
 module.exports = router;

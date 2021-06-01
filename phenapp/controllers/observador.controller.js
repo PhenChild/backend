@@ -21,10 +21,9 @@ exports.getObserver = async function (req, res, next) {
     WHERE: {
       UserId: req.params.userid
     },
+    attributes: ['isJefe','id'],
     include: [{
-      model: estacion, required: false
-    }, {
-      model: user, required: false
+      model: user, required: false, attributes: ['email','nombre','apellido','telefono']
     }]
   })
     .then(obs => {

@@ -8,13 +8,10 @@ const test = require("../controllers/test.controller");
 
 
 
-router.get('/getUsers', user.getAll);
-
-// Logout
-// router.post('/logout', function (req, res) {
-//     console.log(req.body);
-//     res.json('OK');
-//   })
+router.get(
+  '/getUsers', 
+  [authJwt.verifyToken, authJwt.isAdmin],
+  user.getAll);
 
 /**test for tokens */
 router.get("/test/all", test.allAccess);
