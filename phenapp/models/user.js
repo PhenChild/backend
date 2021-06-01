@@ -1,4 +1,5 @@
 'use strict';
+const ROLES = require('../constants/ENUM').ROLES;
 const {
   Model
 } = require('sequelize');
@@ -14,13 +15,19 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   User.init({
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      primaryKey: true
+    },
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     nombre: DataTypes.STRING,
     apellido: DataTypes.STRING,
     telefono: DataTypes.STRING,
     role: {
-      type: DataTypes.ENUM('admin', 'observer', 'viewer', 'user'),
+      type: DataTypes.ENUM(ROLES),
       defaultValue: 'user' /**pending validation in backend for observer only type observer */
      }
   }, {

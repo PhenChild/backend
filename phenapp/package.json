@@ -17,6 +17,7 @@
     "pug": "^3.0.2"
   },
   "devDependencies": {
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express-session": "^1.17.2",
     "nodemon": "^2.0.7",

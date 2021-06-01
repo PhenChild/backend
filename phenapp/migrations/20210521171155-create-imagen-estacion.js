@@ -18,7 +18,7 @@ module.exports = {
         type: Sequelize.STRING,
         references: {
           model: 'Estacion',
-          key: 'codigoEstacion'
+          key: 'codigo'
         },
       },
       createdAt: {

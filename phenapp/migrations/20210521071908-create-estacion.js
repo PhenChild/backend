@@ -2,7 +2,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Estacion', {
-      codigoEstacion: {
+      codigo: {
         unique:true,
         type: Sequelize.STRING,
         allowNull: false,
