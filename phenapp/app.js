@@ -41,7 +41,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use('/', indexRouter);
+app.use('/api', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/observers', obsRouter);

@@ -28,3 +28,6 @@ migration-file:
 	sequelize migration:create --name $(name)
 init:
 	npm start
+#for local tunel, install globally:  npm install -g localtunnel
+ltunnel:
+	lt --port 3000 --subdomain phenapp
