@@ -4,11 +4,14 @@ var cors = require('cors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+const bodyParser = require("body-parser");
 
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var authRouter = require('./routes/auth');
+var obsRouter = require('./routes/observer');
 
 var app = express();
 
@@ -23,15 +26,25 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session({
-  secret: 'phenchild',
-  resave: true,
-  saveUninitialized: true,
-  cookie: { path: '/', httpOnly: true, secure: true, maxAge: null }
-}))
+// app.use(session({
+//   secret: 'phenchild',
+//   resave: true,
+//   saveUninitialized: true,
+//   cookie: { path: '/', httpOnly: true, secure: true, maxAge: null }
+// }))
+
+app.use(function(req, res, next) {
+  res.header(
+    "Access-Control-Allow-Headers",
+    "x-access-token, Origin, Content-Type, Accept"
+  );
+  next();
+});
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/observers', obsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
