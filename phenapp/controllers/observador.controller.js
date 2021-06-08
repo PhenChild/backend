@@ -44,3 +44,18 @@ exports.createObservador = async (req, res) => {
   })
     .catch(err => res.json(err))
 }
+
+exports.getEstacionPorObservador = async (req, res) => {
+  await observer.findAll({
+    where : {
+      EstacionCodigo: req.body.codigo
+    },
+    include: {
+      model: Estacion,
+      required: true
+    }
+  }).then(variableEstacion => {
+    res.json(variableEstacion);
+  })
+  .catch(err => res.json(err));
+}

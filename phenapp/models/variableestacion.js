@@ -10,10 +10,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-        VariableEstacion.belongsTo(models.Estacion);
-        VariableEstacion.belongsTo(models.Variable);
-        VariableEstacion.belongsTo(models.Horario);
-        VariableEstacion.belongsTo(models.Instrumento);
+        VariableEstacion.belongsTo(models.Estacion, {unique: 'plantilla'});
+        VariableEstacion.belongsTo(models.Variable, {unique: 'plantilla'});
+        VariableEstacion.belongsTo(models.Horario, {unique: 'plantilla'});
+        VariableEstacion.belongsTo(models.Instrumento, {unique: 'plantilla'});
     }
   };
   VariableEstacion.init({

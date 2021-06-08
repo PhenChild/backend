@@ -20,7 +20,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: 'Variable',
-          key: 'id'
+          key: 'codigo'
         },
         allowNull: false
       },
@@ -28,7 +28,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: 'Horario',
-          key: 'id'
+          key: 'codigo'
         },
         allowNull: false
       },
