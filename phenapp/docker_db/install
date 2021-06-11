@@ -19,7 +19,7 @@ if [ "$SO" = "centos" ]; then
      echo "(tput setaf 4)***************** Updating System ... ************************************************$(tput setaf 3)"
      yum -y update
      echo "(tput setaf 4)***************** Instaling project dependencies ... ***************************************$(tput setaf 3)"
-     yum install -y yum-utils device-mapper-persistent-data lvm2 --no-install-recommends
+     yum install -y yum-utils device-mapper-persistent-data lvm2
      yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
      echo "(tput setaf 4)***************** Instaling Docker ... ******************************************$(tput setaf 3)"
      yum install docker-ce docker-ce-cli containerd.io
