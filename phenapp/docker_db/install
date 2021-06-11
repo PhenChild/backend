@@ -28,13 +28,15 @@ if [ "$SO" = "centos" ]; then
      systemctl enable docker
      systemctl start docker
      yum install -y epel-release
-     echo "(tput setaf 4)*************** Instaling Python-pip ... ****************************************$(tput setaf 3)"
+     #echo "(tput setaf 4)*************** Instaling Python-pip ... ****************************************$(tput setaf 3)"
      #yum install -y python-pip --no-install-recommends
      echo "(tput setaf 4)************** Instaling DockerCompose .... *************************************$(tput setaf 3)"
-     sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+     curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+     chmod +x /usr/local/bin/docker-compose
+     ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
      #pip install docker-compose --no-install-recommends
-     echo "(tput setaf 4)************* Upgrading Python ... *********************************************$(tput setaf 3)"
-     yum -y upgrade python --no-install-recommends
+     #echo "(tput setaf 4)************* Upgrading Python ... *********************************************$(tput setaf 3)"
+     #yum -y upgrade python --no-install-recommends
      docker version
      docker-compose version
      yum -y install make
