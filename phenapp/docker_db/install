@@ -36,7 +36,7 @@ if [ "$SO" = "centos" ]; then
      ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
      #pip install docker-compose --no-install-recommends
      #echo "(tput setaf 4)************* Upgrading Python ... *********************************************$(tput setaf 3)"
-     #yum -y upgrade python --no-install-recommends
+     yum -y upgrade python
      docker version
      docker-compose version
      yum -y install make
