@@ -3,3 +3,4 @@ ALTER USER phenuser WITH SUPERUSER;
 CREATE DATABASE "dev-phendb"; 
 \c dev-phendb;
 CREATE EXTENSION postgis;
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";

@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Variable.belongsToMany(models.Estacion, { through: 'VariableEstacion'});
+      // Variable.belongsToMany(models.Estacion, { through: 'VariableEstacion'});
     }
   };
   Variable.init({
