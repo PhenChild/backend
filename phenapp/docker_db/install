@@ -22,16 +22,17 @@ if [ "$SO" = "centos" ]; then
      yum install -y yum-utils device-mapper-persistent-data lvm2 --no-install-recommends
      yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
      echo "(tput setaf 4)***************** Instaling Docker ... ******************************************$(tput setaf 3)"
-     yum install -y docker-ce
+     yum install docker-ce docker-ce-cli containerd.io
      usermod -aG docker $(whoami)
      gpasswd -a ${USER} docker
-     systemctl enable docker.service
-     systemctl start docker.service
+     systemctl enable docker
+     systemctl start docker
      yum install -y epel-release
      echo "(tput setaf 4)*************** Instaling Python-pip ... ****************************************$(tput setaf 3)"
-     yum install -y python-pip --no-install-recommends
+     #yum install -y python-pip --no-install-recommends
      echo "(tput setaf 4)************** Instaling DockerCompose .... *************************************$(tput setaf 3)"
-     pip install docker-compose --no-install-recommends
+     sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+     #pip install docker-compose --no-install-recommends
      echo "(tput setaf 4)************* Upgrading Python ... *********************************************$(tput setaf 3)"
      yum -y upgrade python --no-install-recommends
      docker version
