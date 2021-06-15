@@ -1,5 +1,5 @@
-INSERT INTO public."Estacion"
-("codigoEstacion", "nombreEstacion", posicion, altitud, suelo, omm, "createdAt", "updatedAt")
+INSERT INTO "Estacion"
+("codigo", "nombreEstacion", posicion, altitud, suelo, omm, "createdAt", "updatedAt")
 values
 ('EST001', 'Estacion Esmeraldas',point(-2.15,80.05)::geometry, 500, 'suelo', 'oom', pg_catalog.now() , pg_catalog.now()),
 ('EST002', 'Estacion Manabi',point(-2.02,79.1)::geometry, 500, 'suelo', 'oom', pg_catalog.now() , pg_catalog.now()),
@@ -9,7 +9,7 @@ values
 ('EST8022','Baures Aeropuerto',point(-13.65806,-63.70194)::geometry,150,'suelo','omm', pg_catalog.now() , pg_catalog.now()),
 ('EST9002','Cobija Aeropuerto',point(-11.03972,-68.78028)::geometry,235,'suelo','omm', pg_catalog.now() , pg_catalog.now());
 
-INSERT INTO public."Horario"
+INSERT INTO "Horario"
 ("tipoHora", hora, "createdAt", "updatedAt")
 VALUES
 ('parcial'::"enum_Horario_tipoHora", '08:00', pg_catalog.now(), pg_catalog.now()),
@@ -17,7 +17,7 @@ VALUES
 ('parcial'::"enum_Horario_tipoHora", '18:00', pg_catalog.now(), pg_catalog.now()),
 ('diario'::"enum_Horario_tipoHora", '16:00', pg_catalog.now(), pg_catalog.now());
 
-INSERT INTO public."Variable"
+INSERT INTO "Variable"
 (nombre, unidad, maximo, minimo, "tipoDato", "createdAt", "updatedAt")
 VALUES
 ('Temperatura','C',60,-60,'float',pg_catalog.now(),pg_catalog.now()),
@@ -31,7 +31,7 @@ VALUES
 ('Precipitacion','mm',NULL,0,'float',pg_catalog.now(),pg_catalog.now()),
 ('Presion atmosferica','hPa',1100,800,'float',pg_catalog.now(),pg_catalog.now());
 
-INSERT INTO public."Instrumento"
+INSERT INTO "Instrumento"
 (codigo, nombre, "createdAt", "updatedAt", "EstacionCodigo")
 VALUES
 ('INST001', 'Termometro de Mercurio', pg_catalog.now(), pg_catalog.now(), 'EST001'),

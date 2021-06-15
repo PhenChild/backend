@@ -18,7 +18,7 @@ exports.getAll = async function (req, res, next) {
 
 exports.getObserver = async function (req, res, next) {
   await observer.findOne({
-    WHERE: {
+    where: {
       UserId: req.params.userid
     },
     attributes: ['isJefe','id'],

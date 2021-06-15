@@ -8,7 +8,7 @@ router.post('/signup', [
     verifySignUp.checkDuplicateEmail,
     verifySignUp.checkRoleExisted,
     authJwt.isAdmin,
-    authJwt.verifyToken, 
+    cauthJwt.verifyToken, 
     
   ],
   auth.signup);
