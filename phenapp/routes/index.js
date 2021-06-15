@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
+const { authJwt } = require("../middleware");
 let user = require('../controllers/user.controller');
 let landing = require('../controllers/landing.controller');
 let estacion = require('../controllers/estacion.controller');
@@ -18,10 +19,12 @@ router.post('/updateRole', user.updateRole);
 // Estaciones
 router.post('/',landing.get_landing);
 router.get('/getEstaciones', estacion.getEstaciones);
+router.get('/getVarsObs', [authJwt.verifyToken], estacion.getVariableObs);
+router.get('/getEstacionesObs', [authJwt.verifyToken], estacion.getEstacionesObs);
 router.post('/newEstacion', estacion.createEstacion);
 router.post('/updateEstacion', estacion.updateEstacion);
 router.post('/',landing.submit_lead);
-router.get('/getVariablesPorEstacion', estacion.getVariablesPorEstacion);
+router.get('/getVariables/:codigoEstacion', estacion.getVariablesPorEstacion);
 
 // Variables
 router.get('/getVariables', variable.getVariable);
