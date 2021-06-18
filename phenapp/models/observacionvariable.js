@@ -11,17 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       ObservacionVariable.belongsTo(models.VariableEstacion);
+      ObservacionVariable.belongsTo(models.Observador);
     }
   };
   ObservacionVariable.init({
     valor: DataTypes.STRING,
-    isEditable: DataTypes.BOOLEAN,
     fechaObservacion: DataTypes.DATE,
-    posicionObservacion: DataTypes.GEOMETRY,
-    eventoClima: {
-      type: DataTypes.ENUM('Granizada', 'Nevada', 'Niebla', 'Tormenta Electrica','Ninguno'),
-      defaultValue: 'Ninguno' /**pending validation in backend for observer only type observer */
-     }
+    posicionObservacion: DataTypes.GEOMETRY
   }, {
     sequelize,
     modelName: 'ObservacionVariable',

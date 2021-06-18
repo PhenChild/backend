@@ -36,7 +36,6 @@ exports.getObserver = async function (req, res, next) {
 exports.createObservador = async (req, res) => {
   await observer.create({
     isJefe: req.body.isjefe,
-    JefeId: req.body.jefeid,
     EstacionCodigo: req.body.codigoestacion,
     UserId: req.body.userid
   }).then(obs => {
@@ -45,7 +44,7 @@ exports.createObservador = async (req, res) => {
     .catch(err => res.json(err))
 }
 
-exports.getEstacionPorObservador = async (req, res) => {
+exports.getObservadoresPorEstacion = async (req, res) => {
   await observer.findAll({
     where : {
       EstacionCodigo: req.body.codigo

@@ -15,51 +15,6 @@ exports.getEstaciones = async function (req, res, next) {
     .catch(err => res.json(err));
 }
 
-
-exports.getVariableObs = async function (req, res, next) {
-  await observer.findOne({
-    where: { UserId: req.userId },
-    include: {model: estacion, required: true, attributes: ['codigo','nombreEstacion','posicion']}
-  }).then(obs => {
-    var codigoEstacion = obs.EstacionCodigo;
-    variablesEst.findAll({
-      where: {
-        EstacionCodigo: codigoEstacion
-      },
-      attributes: ['id'],
-    include: [{
-      model: estacion, required: true, attributes: ['codigo']
-    },{
-      model: horario, required: true, attributes: ['tipoHora','hora']
-    },{
-      model: variable, required: true, attributes: ['nombre','unidad','maximo','minimo','tipoDato']
-    },{
-      model: instrumento, required: true, attributes: ['nombre']
-    }] 
-    })
-      .then(info => {
-        res.json(info)
-      })
-      .catch(err => res.json(err));
-  }).catch(err => res.status(500).send({
-    message: err
-  }))
-}
-
-exports.getEstacionesObs = async function (req, res, next) {
-  await observer.findOne({
-    where: { UserId: req.userId},
-    attributes: ['id'],
-    include: {
-      model: estacion, required: true, attributes: ['codigo','nombreEstacion','posicion']
-    }
-  }).then(obs => {
-    res.json(obs);
-  }).catch(err => res.status(500).send({
-    message: err
-  }))
-}
-
 exports.createEstacion = async function (req, res, next) {
   console.log(req.body);
   let point = { type: 'Point', coordinates: [parseFloat(req.body.latitud), parseFloat(req.body.longitud)] }
@@ -105,4 +60,48 @@ exports.updateEstacion = async function (req, res, next) {
   }, {
     where: { codigo: req.body.codigo }
   })
+}
+
+exports.getVariableObs = async function (req, res, next) {
+  await observer.findOne({
+    where: { UserId: req.userId },
+    include: {model: estacion, required: true, attributes: ['codigo','nombreEstacion','posicion']}
+  }).then(obs => {
+    var codigoEstacion = obs.EstacionCodigo;
+    variablesEst.findAll({
+      where: {
+        EstacionCodigo: codigoEstacion
+      },
+      attributes: ['id'],
+    include: [{
+      model: estacion, required: true, attributes: ['codigo']
+    },{
+      model: horario, required: true, attributes: ['tipoHora','hora']
+    },{
+      model: variable, required: true, attributes: ['nombre','unidad','maximo','minimo','tipoDato']
+    },{
+      model: instrumento, required: false, attributes: ['nombre']
+    }] 
+    })
+      .then(info => {
+        res.json(info)
+      })
+      .catch(err => res.json(err));
+  }).catch(err => res.status(500).send({
+    message: err
+  }))
+}
+
+exports.getEstacionesObs = async function (req, res, next) {
+  await observer.findOne({
+    where: { UserId: req.userId},
+    attributes: ['id'],
+    include: {
+      model: estacion, required: true, attributes: ['codigo','nombreEstacion','posicion']
+    }
+  }).then(obs => {
+    res.json(obs);
+  }).catch(err => res.status(500).send({
+    message: err
+  }))
 }

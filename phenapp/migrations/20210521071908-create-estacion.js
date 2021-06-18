@@ -11,6 +11,13 @@ module.exports = {
       nombreEstacion: {
         type: Sequelize.STRING
       },
+      jefeId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Observador',
+          key: 'id'
+        },
+      },
       posicion: {
         type: Sequelize.GEOMETRY
       },

@@ -18,7 +18,7 @@ router.post("/signin", auth.signin);
 router.post("/signinAdmin", [authJwt.isAdmin],
 auth.signin);
 
-router.post("/signinObs", [authJwt.isObserver],
+router.post("/signinObs", [authJwt.isObserverByEmail],
 auth.signin);
 
 module.exports = router;

@@ -16,9 +16,6 @@ module.exports = {
         values: ['Granizada', 'Nevada', 'Niebla', 'Tormenta Electrica','Ninguno'],
         defaultValue: 'Ninguno'
       },
-      isEditable: {
-        type: Sequelize.BOOLEAN
-      },
       fechaObservacion: {
         type: Sequelize.DATE
       },

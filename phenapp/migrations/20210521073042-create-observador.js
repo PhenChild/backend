@@ -18,13 +18,6 @@ module.exports = {
           key: 'id'
         }
       },
-      jefeId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Observador',
-          key: 'id'
-        },
-      },
       estacionId: {
         type: Sequelize.STRING,
         references: {

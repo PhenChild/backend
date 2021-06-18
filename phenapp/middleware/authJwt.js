@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const config = require("../config/auth.config.js");
 const db = require("../models");
 const User = db.User;
+const Observer = db.Observador;
 
 verifyToken = (req, res, next) => {
   let token = req.headers["x-access-token"];
@@ -45,8 +46,25 @@ isAdmin = (req, res, next) => {
 }
 
 isObserver = (req, res, next) => {
+  Observer.findOne({
+    where: {
+      UserId: req.userId,
+    }
+  }).then(obs => {
+    // console.log(user);
+    if (obs) {
+      req.obsId = obs.id;
+      next();
+      return;
+    }
+    res.status(403).send({
+      message: "Require Observer Role!"
+    });
+  });
+}
+
+isObserverByEmail = (req, res, next) => {
   let e = req.body.email;
-  let p = req.body.password;
   User.findOne({
     where: {
       email: e,
@@ -69,6 +87,7 @@ isObserver = (req, res, next) => {
 const authJwt = {
   verifyToken: verifyToken,
   isAdmin: isAdmin,
+  isObserverByEmail: isObserverByEmail,
   isObserver: isObserver
 };
 module.exports = authJwt;
