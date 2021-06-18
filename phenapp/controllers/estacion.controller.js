@@ -1,4 +1,4 @@
-const { Sequelize } = require('../models');
+const Sequelize= require('../models');
 
 const estacion = require('../models').Estacion
 const observer = require('../models').Observador
@@ -49,23 +49,47 @@ exports.getVariablesPorEstacion = async function (req, res, next) {
 }
 
 exports.updateEstacion = async function (req, res, next) {
-  console.log(req.body);
-  let point = { type: 'Point', coordinates: [parseFloat(req.body.latitud), parseFloat(req.body.longitud)] }
-  await estacion.update({
-    nombreEstacion: req.body.nombreEstacion,
-    posicion: point,
-    altitud: parseFloat(req.body.altitud),
-    suelo: req.body.suelo,
-    omm: req.body.omm
-  }, {
-    where: { codigo: req.body.codigo }
-  })
+  try {
+    console.log(req.body);
+    let point = { type: 'Point', coordinates: [parseFloat(req.body.latitud), parseFloat(req.body.longitud)] }
+    await Sequelize.transaction(async (t) => {
+
+      const est = await estacion.update({
+        nombreEstacion: req.body.nombreEstacion,
+        posicion: point,
+        altitud: parseFloat(req.body.altitud),
+        suelo: req.body.suelo,
+        omm: req.body.omm
+      }, {
+        where: { codigo: req.body.codigo }
+      })
+
+      await est.setJefe(req.body.jefeid, { transaction: t });
+
+      return est;
+
+    });
+    res.status(200).send({ message: "Succesfully updated" });
+  } catch (error) {
+    res.status(400).send({ message: error.message });
+  }
+  // console.log(req.body);
+  // let point = { type: 'Point', coordinates: [parseFloat(req.body.latitud), parseFloat(req.body.longitud)] }
+  // await estacion.update({
+  //   nombreEstacion: req.body.nombreEstacion,
+  //   posicion: point,
+  //   altitud: parseFloat(req.body.altitud),
+  //   suelo: req.body.suelo,
+  //   omm: req.body.omm
+  // }, {
+  //   where: { codigo: req.body.codigo }
+  // })
 }
 
 exports.getVariableObs = async function (req, res, next) {
   await observer.findOne({
     where: { UserId: req.userId },
-    include: {model: estacion, required: true, attributes: ['codigo','nombreEstacion','posicion']}
+    include: { model: estacion, required: true, attributes: ['codigo', 'nombreEstacion', 'posicion'] }
   }).then(obs => {
     var codigoEstacion = obs.EstacionCodigo;
     variablesEst.findAll({
@@ -73,15 +97,15 @@ exports.getVariableObs = async function (req, res, next) {
         EstacionCodigo: codigoEstacion
       },
       attributes: ['id'],
-    include: [{
-      model: estacion, required: true, attributes: ['codigo']
-    },{
-      model: horario, required: true, attributes: ['tipoHora','hora']
-    },{
-      model: variable, required: true, attributes: ['nombre','unidad','maximo','minimo','tipoDato']
-    },{
-      model: instrumento, required: false, attributes: ['nombre']
-    }] 
+      include: [{
+        model: estacion, required: true, attributes: ['codigo']
+      }, {
+        model: horario, required: true, attributes: ['tipoHora', 'hora']
+      }, {
+        model: variable, required: true, attributes: ['nombre', 'unidad', 'maximo', 'minimo', 'tipoDato']
+      }, {
+        model: instrumento, required: false, attributes: ['nombre']
+      }]
     })
       .then(info => {
         res.json(info)
@@ -94,10 +118,10 @@ exports.getVariableObs = async function (req, res, next) {
 
 exports.getEstacionesObs = async function (req, res, next) {
   await observer.findOne({
-    where: { UserId: req.userId},
+    where: { UserId: req.userId },
     attributes: ['id'],
     include: {
-      model: estacion, required: true, attributes: ['codigo','nombreEstacion','posicion']
+      model: estacion, required: true, attributes: ['codigo', 'nombreEstacion', 'posicion']
     }
   }).then(obs => {
     res.json(obs);

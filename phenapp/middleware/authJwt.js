@@ -26,6 +26,24 @@ verifyToken = (req, res, next) => {
 
 
 isAdmin = (req, res, next) => {
+  User.findOne({
+    where: {
+      id: req.userId,
+      role: "admin"
+    }
+  }).then(user => {
+    if (user) {
+      next();
+      return;
+    }
+    res.status(403).send({
+      message: "Require Admin Role!"
+    });
+  });
+}
+
+isAdminByEmail = (req, res, next) => {
+  console.log(req.body);
   let e = req.body.email;
   User.findOne({
     where: {
@@ -41,7 +59,6 @@ isAdmin = (req, res, next) => {
     res.status(403).send({
       message: "Require Admin Role!"
     });
-    return;
   });
 }
 
@@ -87,6 +104,7 @@ isObserverByEmail = (req, res, next) => {
 const authJwt = {
   verifyToken: verifyToken,
   isAdmin: isAdmin,
+  isAdminByEmail: isAdminByEmail,
   isObserverByEmail: isObserverByEmail,
   isObserver: isObserver
 };

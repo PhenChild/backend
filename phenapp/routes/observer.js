@@ -19,4 +19,11 @@ router.post(
   [authJwt.verifyToken, authJwt.isAdmin],
   observador.createObservador);
 
+  router.get(
+    '/getObsByEst/:codigo',
+    [authJwt.verifyToken, authJwt.isAdmin],
+    observador.getObservadoresPorEstacion);
+
+
+  
 module.exports = router;

@@ -7,7 +7,7 @@ exports.getAll = async function (req, res, next) {
     include: [{
       model: estacion, required: false
     }, {
-      model: user, required: false
+      model: user, required: false, where:{enable:"True"}
     }]
   })
     .then(observadores => {
@@ -23,8 +23,8 @@ exports.getObserver = async function (req, res, next) {
     },
     attributes: ['isJefe','id'],
     include: [{
-      model: user, required: false, attributes: ['email','nombre','apellido','telefono']
-    }]
+      model: user, required: false, attributes: ['email','nombre','apellido','telefono'] 
+    }],
   })
     .then(obs => {
       res.json(obs);
@@ -47,14 +47,12 @@ exports.createObservador = async (req, res) => {
 exports.getObservadoresPorEstacion = async (req, res) => {
   await observer.findAll({
     where : {
-      EstacionCodigo: req.body.codigo
+      EstacionCodigo: req.params.codigo
     },
-    include: {
-      model: Estacion,
-      required: true
-    }
-  }).then(variableEstacion => {
-    res.json(variableEstacion);
+    attributes:['id'],
+    include: [{model: user,required: true,attributes: ['nombre', 'apellido','email']}]
+  }).then(obs => {
+    res.json(obs);
   })
-  .catch(err => res.json(err));
+  .catch(err => res.json(err.message));
 }

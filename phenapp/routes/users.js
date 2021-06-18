@@ -9,9 +9,14 @@ const test = require("../controllers/test.controller");
 
 
 router.get(
-  '/getUsers', 
+  '/getUsers',
   [authJwt.verifyToken, authJwt.isAdmin],
   user.getAll);
+
+router.delete(
+  '/delete/:userid',
+  [authJwt.verifyToken, authJwt.isAdmin],
+  user.disableUser);
 
 /**test for tokens */
 router.get("/test/all", test.allAccess);

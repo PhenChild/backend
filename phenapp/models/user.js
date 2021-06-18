@@ -25,10 +25,14 @@ module.exports = (sequelize, DataTypes) => {
     nombre: DataTypes.STRING,
     apellido: DataTypes.STRING,
     telefono: DataTypes.STRING,
+    enable: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: 'true' /**pending validation in backend for observer only type observer */
+    },
     role: {
       type: DataTypes.ENUM(ROLES),
       defaultValue: 'user' /**pending validation in backend for observer only type observer */
-     }
+    }
   }, {
     sequelize,
     modelName: 'User',
