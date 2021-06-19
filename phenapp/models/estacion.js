@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Estacion.hasOne(models.Observador, { as: 'Jefe'});
+      
     }
   };
   Estacion.init({

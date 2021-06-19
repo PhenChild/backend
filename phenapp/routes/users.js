@@ -6,14 +6,12 @@ const user = require("../controllers/user.controller");
 const test = require("../controllers/test.controller");
 
 
-
-
 router.get(
   '/getUsers',
   [authJwt.verifyToken, authJwt.isAdmin],
   user.getAll);
 
-router.delete(
+router.get(
   '/delete/:userid',
   [authJwt.verifyToken, authJwt.isAdmin],
   user.disableUser);

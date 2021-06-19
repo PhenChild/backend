@@ -39,7 +39,7 @@ isAdmin = (req, res, next) => {
     res.status(403).send({
       message: "Require Admin Role!"
     });
-  });
+  }).catch(err=>{res.status(400).send({message: err.message})});
 }
 
 isAdminByEmail = (req, res, next) => {
@@ -59,7 +59,7 @@ isAdminByEmail = (req, res, next) => {
     res.status(403).send({
       message: "Require Admin Role!"
     });
-  });
+  }).catch(err=>{res.status(400).send({message: err.message})});
 }
 
 isObserver = (req, res, next) => {
@@ -77,7 +77,7 @@ isObserver = (req, res, next) => {
     res.status(403).send({
       message: "Require Observer Role!"
     });
-  });
+  }).catch(err=>{res.status(400).send({message: err.message})});
 }
 
 isObserverByEmail = (req, res, next) => {
@@ -97,7 +97,7 @@ isObserverByEmail = (req, res, next) => {
     res.status(403).send({
       message: "Require Observer Role!"
     });
-  });
+  }).catch(err=>{res.status(400).send({message: err.message})});
 }
 
 

@@ -1,4 +1,4 @@
-const Sequelize= require('../models');
+const Sequelize = require('../models');
 
 const estacion = require('../models').Estacion
 const observer = require('../models').Observador
@@ -52,38 +52,23 @@ exports.updateEstacion = async function (req, res, next) {
   try {
     console.log(req.body);
     let point = { type: 'Point', coordinates: [parseFloat(req.body.latitud), parseFloat(req.body.longitud)] }
-    await Sequelize.transaction(async (t) => {
-
+    await Sequelize.sequelize.transaction(async (t) => {
       const est = await estacion.update({
         nombreEstacion: req.body.nombreEstacion,
         posicion: point,
         altitud: parseFloat(req.body.altitud),
         suelo: req.body.suelo,
-        omm: req.body.omm
+        omm: req.body.omm,
+        JefeId: req.body.jefeid
       }, {
         where: { codigo: req.body.codigo }
-      })
-
-      await est.setJefe(req.body.jefeid, { transaction: t });
-
+      }, { transaction: t })
       return est;
-
     });
     res.status(200).send({ message: "Succesfully updated" });
   } catch (error) {
     res.status(400).send({ message: error.message });
   }
-  // console.log(req.body);
-  // let point = { type: 'Point', coordinates: [parseFloat(req.body.latitud), parseFloat(req.body.longitud)] }
-  // await estacion.update({
-  //   nombreEstacion: req.body.nombreEstacion,
-  //   posicion: point,
-  //   altitud: parseFloat(req.body.altitud),
-  //   suelo: req.body.suelo,
-  //   omm: req.body.omm
-  // }, {
-  //   where: { codigo: req.body.codigo }
-  // })
 }
 
 exports.getVariableObs = async function (req, res, next) {

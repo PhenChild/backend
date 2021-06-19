@@ -11,11 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Observador.belongsTo(models.Estacion);
+      Observador.hasOne(models.Estacion, { as:"Jefe" , constraints:false});
       Observador.belongsTo(models.User);
     }
   };
   Observador.init({
-    isJefe: DataTypes.BOOLEAN
+    isJefe: DataTypes.BOOLEAN,
+    enable: {type:DataTypes.BOOLEAN, defaultValue: 'true'}
   }, {
     sequelize,
     modelName: 'Observador',
