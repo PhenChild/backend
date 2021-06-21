@@ -16,9 +16,13 @@ module.exports = (sequelize, DataTypes) => {
   Horario.init({
     tipoHora: {
       type: DataTypes.ENUM('diario', 'parcial'),
-      defaultValue: 'diario' /**pending validation in backend for observer only type observer */
+      defaultValue: 'diario'
     },
-    hora: DataTypes.TIME
+    hora: DataTypes.TIME,
+    enable: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: 'true' 
+    },
   }, {
     sequelize,
     modelName: 'Horario',

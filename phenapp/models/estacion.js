@@ -19,7 +19,11 @@ module.exports = (sequelize, DataTypes) => {
     posicion: DataTypes.GEOMETRY,
     altitud: DataTypes.FLOAT,
     suelo: DataTypes.STRING,
-    omm: DataTypes.STRING
+    omm: DataTypes.STRING,
+    enable: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: 'true'
+    },
   }, {
     sequelize,
     modelName: 'Estacion',

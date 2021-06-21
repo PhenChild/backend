@@ -16,7 +16,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Observador.init({
-    isJefe: DataTypes.BOOLEAN,
     enable: {type:DataTypes.BOOLEAN, defaultValue: 'true'}
   }, {
     sequelize,

@@ -24,6 +24,9 @@ router.post(
     [authJwt.verifyToken, authJwt.isAdmin],
     observador.getObservadoresPorEstacion);
 
+    router.get('/getEstacionPorObs', 
+    [authJwt.verifyToken, authJwt.isObserver], 
+    observador.getEstacionPorObs);
 
   
 module.exports = router;

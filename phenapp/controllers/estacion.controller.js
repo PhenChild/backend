@@ -2,13 +2,12 @@ const Sequelize = require('../models');
 
 const estacion = require('../models').Estacion
 const observer = require('../models').Observador
-const variablesEst = require('../models').VariableEstacion
-const horario = require('../models').Horario
-const variable = require('../models').Variable
-const instrumento = require('../models').Instrumento
+const user = require('../models').User
 
 exports.getEstaciones = async function (req, res, next) {
-  await estacion.findAll()
+  await estacion.findAll({
+    where: {enable: True }
+  })
     .then(estaciones => {
       res.json(estaciones);
     })
@@ -25,27 +24,42 @@ exports.createEstacion = async function (req, res, next) {
     altitud: parseFloat(req.body.altitud),
     suelo: req.body.suelo,
     omm: req.body.omm
-  })
-    .catch(err => res.json(err))
+  }).then(variableEstacion => {
+    res.status(200).send({message:"Succesfully created"});
+  }).catch(err => res.status(419).send({message: err.message}))
 }
 
-exports.getVariablesPorEstacion = async function (req, res, next) {
-  console.log(req.body);
-  let variables = require('../models').Variable;
-  let variableEstacion = require('../models').VariableEstacion;
+exports.disableEstacion = async function (req, res, next) {
+  try {
+    await Sequelize.sequelize.transaction(async (t) => {
+      const e = await estacion.update({
+        enable: false,
+      }, {
+        where: { codigo: req.params.codigo }, returning: true, plain:true
+      }, { transaction: t })
+      console.log(e[1].codigo);
 
-  await variableEstacion.findAll({
-    where: {
-      EstacionCodigo: req.params.codigo
-    },
-    include: {
-      model: variables,
-      required: true
-    }
-  }).then(variableEstacion => {
-    res.json(variableEstacion);
-  })
-    .catch(err => res.json(err));
+      const obs = await observer.update({
+        enable: false,
+      }, {
+        where: { EstacionCodigo: e[1].codigo },returning: true, plain:true
+      }, { transaction: t })
+
+      if (obs) {
+        for (const o of obs) {
+          await user.update({
+            role: "user",
+          }, {
+            where: { id: o[1].UserId }
+          }, { transaction: t })
+        }        
+      }
+      return e;
+    });
+    res.status(200).send({ message: "Succesfully deleted" });
+  } catch (error) {
+    res.status(419).send({ message: error.message });
+  }
 }
 
 exports.updateEstacion = async function (req, res, next) {
@@ -71,46 +85,5 @@ exports.updateEstacion = async function (req, res, next) {
   }
 }
 
-exports.getVariableObs = async function (req, res, next) {
-  await observer.findOne({
-    where: { UserId: req.userId },
-    include: { model: estacion, required: true, attributes: ['codigo', 'nombreEstacion', 'posicion'] }
-  }).then(obs => {
-    var codigoEstacion = obs.EstacionCodigo;
-    variablesEst.findAll({
-      where: {
-        EstacionCodigo: codigoEstacion
-      },
-      attributes: ['id'],
-      include: [{
-        model: estacion, required: true, attributes: ['codigo']
-      }, {
-        model: horario, required: true, attributes: ['tipoHora', 'hora']
-      }, {
-        model: variable, required: true, attributes: ['nombre', 'unidad', 'maximo', 'minimo', 'tipoDato']
-      }, {
-        model: instrumento, required: false, attributes: ['nombre']
-      }]
-    })
-      .then(info => {
-        res.json(info)
-      })
-      .catch(err => res.json(err));
-  }).catch(err => res.status(500).send({
-    message: err
-  }))
-}
 
-exports.getEstacionesObs = async function (req, res, next) {
-  await observer.findOne({
-    where: { UserId: req.userId },
-    attributes: ['id'],
-    include: {
-      model: estacion, required: true, attributes: ['codigo', 'nombreEstacion', 'posicion']
-    }
-  }).then(obs => {
-    res.json(obs);
-  }).catch(err => res.status(500).send({
-    message: err
-  }))
-}
+

@@ -18,7 +18,11 @@ module.exports = (sequelize, DataTypes) => {
     unidad: DataTypes.STRING,
     maximo: DataTypes.FLOAT,
     minimo: DataTypes.FLOAT,
-    tipoDato: DataTypes.STRING
+    tipoDato: DataTypes.STRING,
+    enable: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: 'true' 
+    },
   }, {
     sequelize,
     modelName: 'Variable',

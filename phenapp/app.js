@@ -13,6 +13,10 @@ var usersRouter = require('./routes/users');
 var authRouter = require('./routes/auth');
 var obsRouter = require('./routes/observer');
 var regRouter = require('./routes/registry');
+var estRouter = require('./routes/estacion');
+var varestRouter = require('./routes/variableestacion');
+var horaRouter = require('./routes/horario');
+var instrRouter = require('./routes/instrumento');
 
 var app = express();
 
@@ -27,13 +31,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use(session({
-//   secret: 'phenchild',
-//   resave: true,
-//   saveUninitialized: true,
-//   cookie: { path: '/', httpOnly: true, secure: true, maxAge: null }
-// }))
-
 app.use(function(req, res, next) {
   res.header(
     "Access-Control-Allow-Headers",
@@ -47,6 +44,10 @@ app.use('/api/users', usersRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/observers', obsRouter);
 app.use('/api/registry', regRouter);
+app.use('/api/estaciones', estRouter);
+app.use('/api/vars-estaciones', varestRouter);
+app.use('/api/horarios', horaRouter);
+app.use('/api/instrumentos', instrRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

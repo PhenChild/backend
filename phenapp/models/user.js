@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     telefono: DataTypes.STRING,
     enable: {
       type: DataTypes.BOOLEAN,
-      defaultValue: 'true' /**pending validation in backend for observer only type observer */
+      defaultValue: 'true' 
     },
     role: {
       type: DataTypes.ENUM(ROLES),

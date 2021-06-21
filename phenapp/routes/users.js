@@ -3,8 +3,7 @@ var router = express.Router();
 
 const { authJwt } = require("../middleware");
 const user = require("../controllers/user.controller");
-const test = require("../controllers/test.controller");
-
+const { verifySignUp } = require("../middleware");
 
 router.get(
   '/getUsers',
@@ -16,19 +15,8 @@ router.get(
   [authJwt.verifyToken, authJwt.isAdmin],
   user.disableUser);
 
-/**test for tokens */
-router.get("/test/all", test.allAccess);
-
-router.get(
-  "/test/observer",
-  [authJwt.verifyToken, authJwt.isObserver],
-  test.observerTest
-);
-
-router.get(
-  "/test/admin",
-  [authJwt.verifyToken, authJwt.isAdmin],
-  test.adminTest
-);
+router.post('/updateRole',
+  [authJwt.verifyToken, authJwt.isAdmin, verifySignUp.checkRoleExisted],
+  user.updateRole);
 
 module.exports = router;

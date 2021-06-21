@@ -4,6 +4,7 @@ const user = require('../models').User
 
 exports.getAll = async function (req, res, next) {
   await observer.findAll({
+    where:{enable: True},
     include: [{
       model: estacion, required: false
     }, {
@@ -19,7 +20,8 @@ exports.getAll = async function (req, res, next) {
 exports.getObserver = async function (req, res, next) {
   await observer.findOne({
     where: {
-      UserId: req.params.userid
+      UserId: req.params.userid,
+      enable: True
     },
     attributes: ['isJefe','id'],
     include: [{
@@ -47,7 +49,8 @@ exports.createObservador = async (req, res) => {
 exports.getObservadoresPorEstacion = async (req, res) => {
   await observer.findAll({
     where : {
-      EstacionCodigo: req.params.codigo
+      EstacionCodigo: req.params.codigo,
+      enable: True
     },
     attributes:['id'],
     include: [{model: user,required: true,attributes: ['nombre', 'apellido','email']}]
@@ -55,4 +58,18 @@ exports.getObservadoresPorEstacion = async (req, res) => {
     res.json(obs);
   })
   .catch(err => res.json(err.message));
+}
+
+exports.getEstacionPorObs = async function (req, res, next) {
+  await observer.findOne({
+    where: { UserId: req.userId },
+    attributes: ['id'],
+    include: {
+      model: estacion, required: true, attributes: ['codigo', 'nombreEstacion', 'posicion']
+    }
+  }).then(obs => {
+    res.json(obs);
+  }).catch(err => res.status(500).send({
+    message: err
+  }))
 }

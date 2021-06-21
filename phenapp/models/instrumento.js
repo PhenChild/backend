@@ -15,7 +15,11 @@ module.exports = (sequelize, DataTypes) => {
   };
   Instrumento.init({
     codigo: {type:DataTypes.STRING,unique:true,primaryKey:true},
-    nombre: DataTypes.STRING
+    nombre: DataTypes.STRING,
+    enable: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: 'true' 
+    },
   }, {
     sequelize,
     modelName: 'Instrumento',

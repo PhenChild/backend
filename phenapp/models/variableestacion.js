@@ -18,7 +18,10 @@ module.exports = (sequelize, DataTypes) => {
   };
   VariableEstacion.init({
     id: {type:DataTypes.INTEGER,unique:true,primaryKey:true,autoIncrement:true},
-    enable: DataTypes.BOOLEAN,
+    enable: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: 'true'
+    },
     EstacionCodigo: {type:DataTypes.STRING,unique:"plantilla"},
     VariableId: {type:DataTypes.INTEGER,unique:"plantilla"},
     HorarioId: {type:DataTypes.INTEGER,unique:"plantilla"},
