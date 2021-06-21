@@ -30,7 +30,7 @@ isAdmin = (req, res, next) => {
     where: {
       id: req.userId,
       role: "admin",
-      enable:True
+      enable:true
     }
   }).then(user => {
     if (user) {
@@ -50,7 +50,7 @@ isAdminByEmail = (req, res, next) => {
     where: {
       email: e,
       role: "admin",
-      enable:True
+      enable:true
     }
   }).then(user => {
     if (user) {
@@ -68,7 +68,7 @@ isObserver = (req, res, next) => {
   Observer.findOne({
     where: {
       UserId: req.userId,
-      enable:True
+      enable:true
     }
   }).then(obs => {
     if (obs) {
@@ -88,7 +88,7 @@ isObserverByEmail = (req, res, next) => {
     where: {
       email: e,
       role: "observer",
-      enable:True
+      enable: true
     }
   }).then(user => {
     // console.log(user);

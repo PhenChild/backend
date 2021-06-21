@@ -5,8 +5,7 @@ var router = express.Router();
 
 let horario = require('../controllers/horario.controller');
 
-// Horarios
 router.get('/getHorarios', [authJwt.verifyToken, authJwt.isAdmin],
-    horario.getHorario);
+    horario.getHorarios);
 
 module.exports = router;

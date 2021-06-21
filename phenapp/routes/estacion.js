@@ -8,11 +8,11 @@ router.get(
     [authJwt.verifyToken, authJwt.isAdmin],
     estacion.disableEstacion);
 
-router.get('/getEstaciones',
+router.get('/getAll',
     [authJwt.verifyToken, authJwt.isAdmin],
     estacion.getEstaciones);
 
-router.post('/newEstacion',
+router.post('/new',
     [authJwt.verifyToken, authJwt.isAdmin],
     estacion.createEstacion);
 

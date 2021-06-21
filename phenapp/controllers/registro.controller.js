@@ -7,7 +7,7 @@ exports.getRegistros = async function (req, res, next) {
     .then(registros => {
       res.json(registros);
     })
-    .catch(err => res.json(err));
+    .catch(err => res.json(err.message));
 }
 
 

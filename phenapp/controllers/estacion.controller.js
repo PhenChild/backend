@@ -6,7 +6,7 @@ const user = require('../models').User
 
 exports.getEstaciones = async function (req, res, next) {
   await estacion.findAll({
-    where: {enable: True }
+    where: {enable: true }
   })
     .then(estaciones => {
       res.json(estaciones);

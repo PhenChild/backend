@@ -16,6 +16,11 @@ router.get(
   user.disableUser);
 
 router.post('/updateRole',
+  [authJwt.verifyToken, authJwt.isAdmin],
+  user.updateUser);
+
+
+router.post('/updateRole',
   [authJwt.verifyToken, authJwt.isAdmin, verifySignUp.checkRoleExisted],
   user.updateRole);
 

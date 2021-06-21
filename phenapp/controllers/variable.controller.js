@@ -1,9 +1,9 @@
 const variables = require('../models').Variable
 const varsEst = require('../models').VariableEstacion
 
-exports.getVariable = async function (req, res, next) {
+exports.getVariables = async function (req, res, next) {
   await variables.findAll({
-    where: { enable: True }
+    where: { enable: true }
   })
     .then(variables => {
       res.json(variables);

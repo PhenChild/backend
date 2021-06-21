@@ -9,7 +9,7 @@ router.get('/getVariableEstacionAll',
     [authJwt.verifyToken, authJwt.isAdmin],
     varsEst.getVarEstAll);
 
-router.post('/newVariableEstacion',
+router.post('/new',
     [authJwt.verifyToken, authJwt.isAdmin],
     varsEst.createVariableEstacion);
 

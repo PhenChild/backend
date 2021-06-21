@@ -8,9 +8,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      isJefe: {
-        type: Sequelize.BOOLEAN
-      },
       userId: {
         type: Sequelize.INTEGER,
         references: {

@@ -3,15 +3,36 @@ const user = require('../models').User
 const observer = require('../models').Observador
 const estacion = require('../models').Estacion
 
+exports.updateUser = async function (req, res, next) {
+  try {
+    console.log(req.body);
+    await Sequelize.sequelize.transaction(async (t) => {
+      const u = await user.update({
+        email: req.body.email,
+        password: bcrypt.hashSync(req.body.password, 8),
+        nombre: req.body.nombre,
+        apellido: req.body.apellido,
+        telefono: req.body.telefono
+      }, {
+        where: { id: req.body.id }
+      }, { transaction: t })
+      return u;
+    });
+    res.status(200).send({ message: "Succesfully updated" });
+  } catch (error) {
+    res.status(400).send({ message: error.message });
+  }
+}
+
 exports.getAll = async function (req, res, next) {
   await user.findAll({
-    where: { enable: True },
+    where: { enable: true },
     attributes: { exclude: ['enable'] }
   })
     .then(user => {
       res.json(user);
     })
-    .catch(err => res.status(419).send({ message: err.message}));
+    .catch(err => res.status(419).send({ message: err.message }));
 }
 
 exports.disableUser = async function (req, res, next) {
@@ -20,13 +41,13 @@ exports.disableUser = async function (req, res, next) {
       const u = await user.update({
         enable: false,
       }, {
-        where: { id: req.params.userid }, returning: true, plain:true
+        where: { id: req.params.userid }, returning: true, plain: true
       }, { transaction: t })
       console.log(u[1].id);
       const obs = await observer.update({
         enable: false,
       }, {
-        where: { UserId: u[1].id },returning: true, plain:true
+        where: { UserId: u[1].id }, returning: true, plain: true
       }, { transaction: t })
 
       if (obs) {
@@ -55,13 +76,13 @@ exports.updateRole = async function (req, res, next) {
         }
       }, { transaction: t })
 
-      if(req.body.role == 'observer'){
+      if (req.body.role == 'observer') {
         await observer.create({
           EstacionCodigo: req.body.estacion,
           UserId: u[1].id
         }, { transaction: t })
       }
-    return u;
+      return u;
     });
     res.status(200).send({ message: "Succesfully updated" });
   } catch (error) {

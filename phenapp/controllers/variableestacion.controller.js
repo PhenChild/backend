@@ -2,9 +2,14 @@ const { Sequelize } = require('../models');
 
 
 const variableEstacion = require('../models').VariableEstacion
+const observer = require('../models').Observador
+const estacion = require('../models').Estacion
+const horario = require('../models').Horario
+const variable = require('../models').Variable
+const instrumento = require('../models').Instrumento
 
 exports.getVarEstAll = async function (req, res, next) {
-  await variableEstacion.findAll({ where: { enable: True } })
+  await variableEstacion.findAll({ where: { enable: true } })
     .then(variableEstacion => {
       res.json(variableEstacion);
     })
@@ -19,12 +24,10 @@ exports.createVariableEstacion = async function (req, res, next) {
       EstacionCodigo: codigo,
       VariableId: parseInt(a.id, 10),
       HorarioId: parseInt(a.idHora, 10),
-      InstrumentoCodigo: "codigo1",
-      enable: true
+      InstrumentoCodigo: "ISC001"
     })
     array.push(json)
   }
-
   await variableEstacion.bulkCreate(array)
     .then(variableEstacion => {
       res.status(200).send({ message: "Succesfully updated" });
@@ -41,7 +44,7 @@ exports.getVariablesPorEstacion = async function (req, res, next) {
   await variableEstacion.findAll({
     where: {
       EstacionCodigo: req.params.codigo,
-      enable: True
+      enable: true
     },
     //variable id, nombre --- horario id,nombre
     attributes: [],
@@ -85,10 +88,10 @@ exports.getVariableObs = async function (req, res, next) {
     include: { model: estacion, required: true, attributes: ['codigo', 'nombreEstacion', 'posicion'] }
   }).then(obs => {
     var codigoEstacion = obs.EstacionCodigo;
-    variablesEst.findAll({
+    variableEstacion.findAll({
       where: {
         EstacionCodigo: codigoEstacion,
-        enable: True
+        enable: true
       },
       attributes: ['id'],
       include: [{
@@ -106,6 +109,6 @@ exports.getVariableObs = async function (req, res, next) {
       })
       .catch(err => res.json(err));
   }).catch(err => res.status(500).send({
-    message: err
+    message: err.message
   }))
 }

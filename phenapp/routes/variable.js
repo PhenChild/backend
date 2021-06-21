@@ -7,9 +7,9 @@ const variable = require("../controllers/variable.controller");
 // Variables
 router.get('/getVariables',
     [authJwt.verifyToken, authJwt.isAdmin],
-    variable.getVariable);
+    variable.getVariables);
 
-router.post('/newVariables',
+router.post('/new',
     [authJwt.verifyToken, authJwt.isAdmin],
     variable.createVariable);
 

@@ -6,10 +6,12 @@ var router = express.Router();
 
 let observador = require('../controllers/observador.controller');
 
-router.get('/getAll', observador.getAll);
+router.get('/getAll',
+  [authJwt.verifyToken, authJwt.isAdmin],
+  observador.getAll);
 
 router.get(
-  "/get",
+  "/get/:userid",
   [authJwt.verifyToken],
   observador.getObserver
 );
@@ -19,14 +21,14 @@ router.post(
   [authJwt.verifyToken, authJwt.isAdmin],
   observador.createObservador);
 
-  router.get(
-    '/getObsByEst/:codigo',
-    [authJwt.verifyToken, authJwt.isAdmin],
-    observador.getObservadoresPorEstacion);
+router.get(
+  '/getObsByEst/:codigo',
+  [authJwt.verifyToken, authJwt.isAdmin],
+  observador.getObservadoresPorEstacion);
 
-    router.get('/getEstacionPorObs', 
-    [authJwt.verifyToken, authJwt.isObserver], 
-    observador.getEstacionPorObs);
+router.get('/getEstacionPorObs',
+  [authJwt.verifyToken, authJwt.isObserver],
+  observador.getEstacionPorObs);
 
-  
+
 module.exports = router;

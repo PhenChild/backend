@@ -1,7 +1,7 @@
 const instrumento = require('../models').Instrumento
 
 exports.getInstrumentos = async function(req, res, next) {
-  await instrumento.findAll({where: {enable : "True"}})
+  await instrumento.findAll({where: {enable : "true"}})
     .then(instrumento => {
       res.json(instrumento);
     })
@@ -13,7 +13,7 @@ exports.getInstrumentoPorEstacion = async function(req, res, next) {
   await instrumento.findAll({
     where: {
       EstacionCodigo: req.body.codigo,
-      enable: True
+      enable: true
     },
     include: {
       model: estaciones,

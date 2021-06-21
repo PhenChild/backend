@@ -33,7 +33,7 @@ exports.signin = (req, res) => {
   User.findOne({
     where: {
       email: req.body.email,
-      enable: True
+      enable: true
     }
   }).then(user => {
     if (!user) {
