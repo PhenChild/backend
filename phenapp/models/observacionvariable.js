@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 const {
   Model
-} = require('sequelize');
+} = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class ObservacionVariable extends Model {
     /**
@@ -9,9 +9,9 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-      ObservacionVariable.belongsTo(models.VariableEstacion);
-      ObservacionVariable.belongsTo(models.Observador);
+    static associate (models) {
+      ObservacionVariable.belongsTo(models.VariableEstacion)
+      ObservacionVariable.belongsTo(models.Observador)
     }
   };
   ObservacionVariable.init({
@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'ObservacionVariable',
-    tableName: 'ObservacionVariable',
-  });
-  return ObservacionVariable;
-};
+    tableName: 'ObservacionVariable'
+  })
+  return ObservacionVariable
+}

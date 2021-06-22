@@ -1,5 +1,4 @@
-const Sequelize = require('../models');
-
+const Sequelize = require('../models')
 
 const variableEstacion = require('../models').VariableEstacion
 const observer = require('../models').Observador
@@ -11,7 +10,7 @@ const instrumento = require('../models').Instrumento
 exports.getVarEstAll = async function (req, res, next) {
   await variableEstacion.findAll({ where: { enable: true } })
     .then(variableEstacion => {
-      res.json(variableEstacion);
+      res.json(variableEstacion)
     })
     .catch(err => res.status(419).send({ message: err.message }))
 }
@@ -19,55 +18,55 @@ exports.getVarEstAll = async function (req, res, next) {
 exports.assignVariableEstacion = async function (req, res, next) {
   try {
     await Sequelize.sequelize.transaction(async (t) => {
-      console.log(req.body);
-      let array = []
-      let codigo = req.body.codigoEstacion;
-      for (let a of req.body.variablesAgregadas) {
-        let json = ({
+      console.log(req.body)
+      const array = []
+      const codigo = req.body.codigoEstacion
+      for (const a of req.body.variablesAgregadas) {
+        const json = ({
           EstacionCodigo: codigo,
           VariableId: parseInt(a.id, 10),
           HorarioId: parseInt(a.idHora, 10),
-          InstrumentoCodigo: "ISC001"
+          InstrumentoCodigo: 'ISC001'
         })
-        console.log(json);
+        console.log(json)
         await variableEstacion.findOne({
           where: json
         }).then(v => {
           if (!v) {
             array.push(json)
           } else {
-            v.enable = true;
+            v.enable = true
             v.save()
           }
         })
       }
-      console.log(array);
-      if(array.length !=0){await variableEstacion.bulkCreate(array, { transaction: t })}
-      
-      for (let a of req.body.variablesEliminadas) {
+      console.log(array)
+      if (array.length != 0) { await variableEstacion.bulkCreate(array, { transaction: t }) }
+
+      for (const a of req.body.variablesEliminadas) {
         await variableEstacion.update({
-          enable: false,
+          enable: false
         }, {
           where: { VariableId: a.id, EstacionCodigo: codigo }, returning: true, plain: true
         }, { transaction: t })
       }
-    });
-    res.status(200).send({ message: "Succesfully assigned" });
+    })
+    res.status(200).send({ message: 'Succesfully assigned' })
   } catch (error) {
-    res.status(419).send({ message: error.message });
+    res.status(419).send({ message: error.message })
   }
 }
 
 exports.getVariablesPorEstacion = async function (req, res, next) {
-  console.log(req.params);
-  let variableEstacion = require('../models').VariableEstacion;
+  console.log(req.params)
+  const variableEstacion = require('../models').VariableEstacion
 
   await variableEstacion.findAll({
     where: {
       EstacionCodigo: req.params.codigo,
       enable: true
     },
-    //variable id, nombre --- horario id,nombre
+    // variable id, nombre --- horario id,nombre
     attributes: [],
     include: [{
       model: variable,
@@ -81,25 +80,25 @@ exports.getVariablesPorEstacion = async function (req, res, next) {
     }]
 
   }).then(variableEstacion => {
-    res.json(variableEstacion);
+    res.json(variableEstacion)
   })
-    .catch(err => res.status(419).send({ message: err.message }));
+    .catch(err => res.status(419).send({ message: err.message }))
 }
 
 exports.disableVariableEstacion = async function (req, res, next) {
   try {
     await Sequelize.sequelize.transaction(async (t) => {
       const v = await variableEstacion.update({
-        enable: false,
+        enable: false
       }, {
         where: { id: req.params.varestid }, returning: true, plain: true
       }, { transaction: t })
-      console.log(v[1].id);
-      return v;
-    });
-    res.status(200).send({ message: "Succesfully deleted" });
+      console.log(v[1].id)
+      return v
+    })
+    res.status(200).send({ message: 'Succesfully deleted' })
   } catch (error) {
-    res.status(400).send({ message: error.message });
+    res.status(400).send({ message: error.message })
   }
 }
 
@@ -108,7 +107,7 @@ exports.getVariableObs = async function (req, res, next) {
     where: { UserId: req.userId },
     include: { model: estacion, required: true, attributes: ['codigo', 'nombreEstacion', 'posicion'] }
   }).then(obs => {
-    var codigoEstacion = obs.EstacionCodigo;
+    const codigoEstacion = obs.EstacionCodigo
     variableEstacion.findAll({
       where: {
         EstacionCodigo: codigoEstacion,
@@ -128,7 +127,7 @@ exports.getVariableObs = async function (req, res, next) {
       .then(info => {
         res.json(info)
       })
-      .catch(err => res.json(err));
+      .catch(err => res.json(err))
   }).catch(err => res.status(500).send({
     message: err.message
   }))

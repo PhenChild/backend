@@ -1,11 +1,11 @@
-const { authJwt } = require("../middleware");
+const { authJwt } = require('../middleware')
 
-var express = require('express');
-var router = express.Router();
+const express = require('express')
+const router = express.Router()
 
-let horario = require('../controllers/horario.controller');
+const horario = require('../controllers/horario.controller')
 
 router.get('/getHorarios', [authJwt.verifyToken, authJwt.isAdmin],
-    horario.getHorarios);
+  horario.getHorarios)
 
-module.exports = router;
+module.exports = router

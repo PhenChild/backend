@@ -1,108 +1,106 @@
-const jwt = require("jsonwebtoken");
-const config = require("../config/auth.config.js");
-const db = require("../models");
-const User = db.User;
-const Observer = db.Observador;
+const jwt = require('jsonwebtoken')
+const config = require('../config/auth.config.js')
+const db = require('../models')
+const User = db.User
+const Observer = db.Observador
 
 verifyToken = (req, res, next) => {
-  let token = req.headers["x-access-token"];
+  const token = req.headers['x-access-token']
 
   if (!token) {
     return res.status(403).send({
-      message: "No token provided!"
-    });
+      message: 'No token provided!'
+    })
   }
 
   jwt.verify(token, config.secret, (err, decoded) => {
     if (err) {
       return res.status(401).send({
-        message: "Unauthorized!"
-      });
+        message: 'Unauthorized!'
+      })
     }
-    req.userId = decoded.id;
-    next();
-  });
-};
-
+    req.userId = decoded.id
+    next()
+  })
+}
 
 isAdmin = (req, res, next) => {
   User.findOne({
     where: {
       id: req.userId,
-      role: "admin",
-      enable:true
+      role: 'admin',
+      enable: true
     }
   }).then(user => {
     if (user) {
-      next();
-      return;
+      next()
+      return
     }
     res.status(403).send({
-      message: "Require Admin Role!"
-    });
-  }).catch(err=>{res.status(400).send({message: err.message})});
+      message: 'Require Admin Role!'
+    })
+  }).catch(err => { res.status(400).send({ message: err.message }) })
 }
 
 isAdminByEmail = (req, res, next) => {
-  console.log(req.body);
-  let e = req.body.email;
+  console.log(req.body)
+  const e = req.body.email
   User.findOne({
     where: {
       email: e,
-      role: "admin",
-      enable:true
+      role: 'admin',
+      enable: true
     }
   }).then(user => {
     if (user) {
-      req.userId = user.id;
-      next();
-      return;
+      req.userId = user.id
+      next()
+      return
     }
     res.status(403).send({
-      message: "Require Admin Role!"
-    });
-  }).catch(err=>{res.status(400).send({message: err.message})});
+      message: 'Require Admin Role!'
+    })
+  }).catch(err => { res.status(400).send({ message: err.message }) })
 }
 
 isObserver = (req, res, next) => {
   Observer.findOne({
     where: {
       UserId: req.userId,
-      enable:true
+      enable: true
     }
   }).then(obs => {
     if (obs) {
-      req.obsId = obs.id;
-      next();
-      return;
+      req.obsId = obs.id
+      next()
+      return
     }
     res.status(403).send({
-      message: "Require Observer Role!"
-    });
-  }).catch(err=>{res.status(400).send({message: err.message})});
+      message: 'Require Observer Role!'
+    })
+  }).catch(err => { res.status(400).send({ message: err.message }) })
 }
 
 isObserverByEmail = (req, res, next) => {
-  let e = req.body.email;
+  const e = req.body.email
   User.findOne({
     where: {
       email: e,
-      role: "observer",
+      role: 'observer',
       enable: true
     }
   }).then(user => {
     // console.log(user);
     if (user) {
-      req.userId = user.id;
-      next();
-      return;
+      req.userId = user.id
+      next()
+      return
     }
     res.status(403).send({
-      message: "Require Observer Role!"
-    });
-  }).catch(err=>{res.status(400).send({message: err.message})});
+      message: 'Require Observer Role!'
+    })
+  }).catch(err => { res.status(400).send({ message: err.message }) })
 }
-
 
 const authJwt = {
   verifyToken: verifyToken,
@@ -110,8 +108,8 @@ const authJwt = {
   isAdminByEmail: isAdminByEmail,
   isObserverByEmail: isObserverByEmail,
   isObserver: isObserver
-};
-module.exports = authJwt;
+}
+module.exports = authJwt
 
 // isAdmin = (req, res, next) => {
 //   User.findByPk(req.userId).then(user => {
@@ -125,7 +123,6 @@ module.exports = authJwt;
 //     return;
 //   });
 // };
-
 
 // isObserver = (req, res, next) => {
 //   User.findByPk(req.userId).then(user => {

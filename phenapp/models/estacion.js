@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 const {
   Model
-} = require('sequelize');
+} = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class Estacion extends Model {
     /**
@@ -9,12 +9,12 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-      
+    static associate (models) {
+
     }
   };
   Estacion.init({
-    codigo: {type:DataTypes.STRING,unique:true,primaryKey:true},
+    codigo: { type: DataTypes.STRING, unique: true, primaryKey: true },
     nombreEstacion: DataTypes.STRING,
     posicion: DataTypes.GEOMETRY,
     altitud: DataTypes.FLOAT,
@@ -23,11 +23,11 @@ module.exports = (sequelize, DataTypes) => {
     enable: {
       type: DataTypes.BOOLEAN,
       defaultValue: 'true'
-    },
+    }
   }, {
     sequelize,
     modelName: 'Estacion',
-    tableName: 'Estacion',
-  });
-  return Estacion;
-};
+    tableName: 'Estacion'
+  })
+  return Estacion
+}

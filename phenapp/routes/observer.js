@@ -1,34 +1,33 @@
 // Observadores
-const { authJwt } = require("../middleware");
+const { authJwt } = require('../middleware')
 
-var express = require('express');
-var router = express.Router();
+const express = require('express')
+const router = express.Router()
 
-let observador = require('../controllers/observador.controller');
+const observador = require('../controllers/observador.controller')
 
 router.get('/getAll',
   [authJwt.verifyToken, authJwt.isAdmin],
-  observador.getAll);
+  observador.getAll)
 
 router.get(
-  "/get/:userid",
+  '/get/:userid',
   [authJwt.verifyToken],
   observador.getObserver
-);
+)
 
 router.post(
   '/new',
   [authJwt.verifyToken, authJwt.isAdmin],
-  observador.createObservador);
+  observador.createObservador)
 
 router.get(
   '/getObsByEst/:codigo',
   [authJwt.verifyToken, authJwt.isAdmin],
-  observador.getObservadoresPorEstacion);
+  observador.getObservadoresPorEstacion)
 
 router.get('/getEstacionPorObs',
   [authJwt.verifyToken, authJwt.isObserver],
-  observador.getEstacionPorObs);
+  observador.getEstacionPorObs)
 
-
-module.exports = router;
+module.exports = router

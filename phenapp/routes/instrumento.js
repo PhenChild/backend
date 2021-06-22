@@ -1,16 +1,16 @@
-const { authJwt } = require("../middleware");
+const { authJwt } = require('../middleware')
 
-var express = require('express');
-var router = express.Router();
+const express = require('express')
+const router = express.Router()
 
-let instrumento = require('../controllers/instrumento.controller');
+const instrumento = require('../controllers/instrumento.controller')
 
-router.get('/getInstrumentos', 
-[authJwt.verifyToken, authJwt.isAdmin],
-instrumento.getInstrumentos);
+router.get('/getInstrumentos',
+  [authJwt.verifyToken, authJwt.isAdmin],
+  instrumento.getInstrumentos)
 
-router.get('/getInstrumentoPorEstacion', 
-[authJwt.verifyToken, authJwt.isAdmin],
-instrumento.getInstrumentoPorEstacion);
+router.get('/getInstrumentoPorEstacion',
+  [authJwt.verifyToken, authJwt.isAdmin],
+  instrumento.getInstrumentoPorEstacion)
 
-module.exports = router;
+module.exports = router

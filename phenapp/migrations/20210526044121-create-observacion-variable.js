@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('ObservacionVariable', {
@@ -13,7 +13,7 @@ module.exports = {
       },
       eventoClima: {
         type: Sequelize.ENUM,
-        values: ['Granizada', 'Nevada', 'Niebla', 'Tormenta Electrica','Ninguno'],
+        values: ['Granizada', 'Nevada', 'Niebla', 'Tormenta Electrica', 'Ninguno'],
         defaultValue: 'Ninguno'
       },
       fechaObservacion: {
@@ -30,9 +30,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
+    })
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('ObservacionVariable');
+    await queryInterface.dropTable('ObservacionVariable')
   }
-};
+}

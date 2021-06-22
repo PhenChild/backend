@@ -1,12 +1,12 @@
-'use strict';
+'use strict'
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Instrumento', {
       codigo: {
-        unique:true,
+        unique: true,
         type: Sequelize.STRING,
         allowNull: false,
-        primaryKey: true,
+        primaryKey: true
       },
       nombre: {
         type: Sequelize.STRING
@@ -19,9 +19,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
+    })
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Instrumento');
+    await queryInterface.dropTable('Instrumento')
   }
-};
+}

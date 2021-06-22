@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Observador', {
@@ -20,7 +20,7 @@ module.exports = {
         references: {
           model: 'Estacion',
           key: 'codigo'
-        },
+        }
       },
       createdAt: {
         allowNull: false,
@@ -32,9 +32,9 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
-    });
+    })
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Observador');
+    await queryInterface.dropTable('Observador')
   }
-};
+}

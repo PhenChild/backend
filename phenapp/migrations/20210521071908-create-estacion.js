@@ -1,12 +1,12 @@
-'use strict';
+'use strict'
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Estacion', {
       codigo: {
-        unique:true,
+        unique: true,
         type: Sequelize.STRING,
         allowNull: false,
-        primaryKey: true,
+        primaryKey: true
       },
       nombreEstacion: {
         type: Sequelize.STRING
@@ -16,7 +16,7 @@ module.exports = {
         references: {
           model: 'Observador',
           key: 'id'
-        },
+        }
       },
       posicion: {
         type: Sequelize.GEOMETRY
@@ -38,9 +38,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
+    })
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Estacion');
+    await queryInterface.dropTable('Estacion')
   }
-};
+}

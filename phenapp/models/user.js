@@ -1,8 +1,8 @@
-'use strict';
-const ROLES = require('../constants/ENUM').ROLES;
+'use strict'
+const ROLES = require('../constants/ENUM').ROLES
 const {
   Model
-} = require('sequelize');
+} = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
+    static associate (models) {
       // define association here
     }
   };
@@ -27,16 +27,16 @@ module.exports = (sequelize, DataTypes) => {
     telefono: DataTypes.STRING,
     enable: {
       type: DataTypes.BOOLEAN,
-      defaultValue: 'true' 
+      defaultValue: 'true'
     },
     role: {
       type: DataTypes.ENUM(ROLES),
-      defaultValue: 'user' /**pending validation in backend for observer only type observer */
+      defaultValue: 'user' /** pending validation in backend for observer only type observer */
     }
   }, {
     sequelize,
     modelName: 'User',
-    tableName: 'User',
-  });
-  return User;
-};
+    tableName: 'User'
+  })
+  return User
+}

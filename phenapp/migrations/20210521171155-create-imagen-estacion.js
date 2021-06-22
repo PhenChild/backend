@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('ImagenEstacion', {
@@ -19,7 +19,7 @@ module.exports = {
         references: {
           model: 'Estacion',
           key: 'codigo'
-        },
+        }
       },
       createdAt: {
         allowNull: false,
@@ -29,9 +29,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
+    })
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('ImagenEstacion');
+    await queryInterface.dropTable('ImagenEstacion')
   }
-};
+}

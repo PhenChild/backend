@@ -1,11 +1,11 @@
-const Sequelize = require('../models');
+const Sequelize = require('../models')
 const user = require('../models').User
 const observer = require('../models').Observador
 const estacion = require('../models').Estacion
 
 exports.updateUser = async function (req, res, next) {
   try {
-    console.log(req.body);
+    console.log(req.body)
     await Sequelize.sequelize.transaction(async (t) => {
       const u = await user.update({
         email: req.body.email,
@@ -15,56 +15,55 @@ exports.updateUser = async function (req, res, next) {
       }, {
         where: { id: req.body.id }
       }, { transaction: t })
-      return u;
-    });
-    res.status(200).send({ message: "Succesfully updated" });
+      return u
+    })
+    res.status(200).send({ message: 'Succesfully updated' })
   } catch (error) {
-    res.status(400).send({ message: error.message });
+    res.status(400).send({ message: error.message })
   }
 }
 
 exports.getAll = async function (req, res, next) {
   await user.findAll({
     where: { enable: true },
-    attributes: { exclude: ['enable','password'] }
+    attributes: { exclude: ['enable', 'password'] }
   })
     .then(user => {
-      res.json(user);
+      res.json(user)
     })
-    .catch(err => res.status(419).send({ message: err.message }));
+    .catch(err => res.status(419).send({ message: err.message }))
 }
 
 exports.disableUser = async function (req, res, next) {
   try {
     await Sequelize.sequelize.transaction(async (t) => {
       const u = await user.update({
-        enable: false,
+        enable: false
       }, {
         where: { id: req.params.userid }, returning: true, plain: true
       }, { transaction: t })
-      console.log(u);
+      console.log(u)
 
-
-      if(u[1].role == 'observer'){
+      if (u[1].role == 'observer') {
         const obs = await observer.update({
-          enable: false,
+          enable: false
         }, {
           where: { UserId: u[1].id }, returning: true, plain: true
         }, { transaction: t })
-  
+
         if (obs) {
           await estacion.update({
-            JefeId: null,
+            JefeId: null
           }, {
             where: { JefeId: obs[1].id }
           }, { transaction: t })
         }
       }
-      return u;
-    });
-    res.status(200).send({ message: "Succesfully deleted" });
+      return u
+    })
+    res.status(200).send({ message: 'Succesfully deleted' })
   } catch (error) {
-    res.status(400).send({ message: error.message });
+    res.status(400).send({ message: error.message })
   }
 }
 
@@ -76,19 +75,21 @@ exports.updateRole = async function (req, res, next) {
       }, {
         where: {
           id: req.body.usuario
-        }, returning: true, plain:true
+        },
+        returning: true,
+        plain: true
       }, { transaction: t })
-      console.log("salida "+u[1].id);
+      console.log('salida ' + u[1].id)
       if (req.body.role == 'observer') {
         await observer.create({
           EstacionCodigo: req.body.estacion,
           UserId: u[1].id
         }, { transaction: t })
       }
-      return u;
-    });
-    res.status(200).send({ message: "Succesfully updated" });
+      return u
+    })
+    res.status(200).send({ message: 'Succesfully updated' })
   } catch (error) {
-    res.status(419).send({ message: error.message });
+    res.status(419).send({ message: error.message })
   }
 }

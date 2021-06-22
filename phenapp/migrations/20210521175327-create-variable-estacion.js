@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('VariableEstacion', {
@@ -40,7 +40,7 @@ module.exports = {
         },
         allowNull: false
       },
-      enable:{
+      enable: {
         allowNull: false,
         type: Sequelize.BOOLEAN,
         defaultValue: true
@@ -55,9 +55,9 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
-    });
+    })
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('VariableEstacion');
+    await queryInterface.dropTable('VariableEstacion')
   }
-};
+}

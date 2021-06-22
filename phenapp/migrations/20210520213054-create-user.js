@@ -1,5 +1,5 @@
-'use strict';
-const ROLES = require('../constants/ENUM').ROLES;
+'use strict'
+const ROLES = require('../constants/ENUM').ROLES
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('User', {
@@ -37,9 +37,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
+    })
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('User');
+    await queryInterface.dropTable('User')
   }
-};
+}

@@ -1,9 +1,9 @@
-const db = require("../models");
-const config = require("../config/auth.config");
-const User = db.User;
+const db = require('../models')
+const config = require('../config/auth.config')
+const User = db.User
 
-var jwt = require("jsonwebtoken");
-var bcrypt = require("bcryptjs");
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
 
 exports.signup = (req, res) => {
   // Save User to Database
@@ -17,17 +17,17 @@ exports.signup = (req, res) => {
     .then(user => {
       if (req.body.role) {
         user.update({ role: req.body.role }).then(() => {
-          res.send({ message: "User was registered successfully!" });
-        });
+          res.send({ message: 'User was registered successfully!' })
+        })
       } else {
         // user role by default
-        res.send({ message: "User was registered without role successfully!" });
+        res.send({ message: 'User was registered without role successfully!' })
       }
     })
     .catch(err => {
-      res.status(500).send({ message: err.message });
-    });
-};
+      res.status(500).send({ message: err.message })
+    })
+}
 
 exports.signin = (req, res) => {
   User.findOne({
@@ -37,31 +37,31 @@ exports.signin = (req, res) => {
     }
   }).then(user => {
     if (!user) {
-      return res.status(404).send({ message: "User Not found." });
+      return res.status(404).send({ message: 'User Not found.' })
     }
-    var passwordIsValid = bcrypt.compareSync(
+    const passwordIsValid = bcrypt.compareSync(
       req.body.password,
       user.password
-    );
+    )
     if (!passwordIsValid) {
       return res.status(401).send({
         accessToken: null,
-        message: "Invalid Password!"
-      });
+        message: 'Invalid Password!'
+      })
     }
-    var token = jwt.sign({ id: user.id }, config.secret, {
+    const token = jwt.sign({ id: user.id }, config.secret, {
       expiresIn: '1800s' // 30 minutos
-    });
+    })
 
-    var userRole = "ROLE_" + user.role.toUpperCase();
+    const userRole = 'ROLE_' + user.role.toUpperCase()
     res.status(200).send({
       id: user.id,
       email: user.email,
       role: userRole,
       accessToken: token
-    });
+    })
   })
     .catch(err => {
-      res.status(500).send({ message: err.message });
-    });
-};
+      res.status(500).send({ message: err.message })
+    })
+}
