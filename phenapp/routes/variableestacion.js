@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
+
 const { authJwt } = require("../middleware");
 const varsEst = require("../controllers/variableestacion.controller");
 
@@ -9,9 +10,9 @@ router.get('/getVariableEstacionAll',
     [authJwt.verifyToken, authJwt.isAdmin],
     varsEst.getVarEstAll);
 
-router.post('/new',
+router.post('/assign',
     [authJwt.verifyToken, authJwt.isAdmin],
-    varsEst.createVariableEstacion);
+    varsEst.assignVariableEstacion);
 
 router.get('/getVariablesPorEstacion/:codigo',
     [authJwt.verifyToken, authJwt.isAdmin],

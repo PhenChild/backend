@@ -1,3 +1,4 @@
+const Sequelize = require('../models');
 const variables = require('../models').Variable
 const varsEst = require('../models').VariableEstacion
 
@@ -23,7 +24,7 @@ exports.disableVariable = async function (req, res, next) {
       await varsEst.update({
         enable: false,
       }, {
-        where: { VariableId: u[1].id },returning: true, plain:true
+        where: { VariableId: v[1].id },returning: true, plain:true
       }, { transaction: t })
       return v;
     });

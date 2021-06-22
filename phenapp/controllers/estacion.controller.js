@@ -6,7 +6,7 @@ const user = require('../models').User
 
 exports.getEstaciones = async function (req, res, next) {
   await estacion.findAll({
-    where: {enable: true }
+    where: { enable: true }
   })
     .then(estaciones => {
       res.json(estaciones);
@@ -25,35 +25,38 @@ exports.createEstacion = async function (req, res, next) {
     suelo: req.body.suelo,
     omm: req.body.omm
   }).then(variableEstacion => {
-    res.status(200).send({message:"Succesfully created"});
-  }).catch(err => res.status(419).send({message: err.message}))
+    res.status(200).send({ message: "Succesfully created" });
+  }).catch(err => res.status(419).send({ message: err.message }))
 }
 
 exports.disableEstacion = async function (req, res, next) {
   try {
     await Sequelize.sequelize.transaction(async (t) => {
+      console.log(req.params);
       const e = await estacion.update({
         enable: false,
       }, {
-        where: { codigo: req.params.codigo }, returning: true, plain:true
+        where: { codigo: req.params.codigo }, returning: true, plain: true
       }, { transaction: t })
-      console.log(e[1].codigo);
+      console.log("algo " + e[1].codigo);
 
-      const obs = await observer.update({
+      await observer.update({
         enable: false,
       }, {
-        where: { EstacionCodigo: e[1].codigo },returning: true, plain:true
-      }, { transaction: t })
-
-      if (obs) {
-        for (const o of obs) {
-          await user.update({
-            role: "user",
-          }, {
-            where: { id: o[1].UserId }
-          }, { transaction: t })
-        }        
-      }
+        where: { EstacionCodigo: e[1].codigo }
+      }, { transaction: t }).then(obs => {
+        console.log(obs);
+        if (obs != 0) {
+          console.log('ingreso al for');
+          for (const o of obs) {
+            user.update({
+              role: "user",
+            }, {
+              where: { id: o.UserId }
+            }, { transaction: t })
+          }
+        }
+      })
       return e;
     });
     res.status(200).send({ message: "Succesfully deleted" });

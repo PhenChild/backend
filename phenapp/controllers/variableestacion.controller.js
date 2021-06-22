@@ -1,4 +1,4 @@
-const { Sequelize } = require('../models');
+const Sequelize = require('../models');
 
 
 const variableEstacion = require('../models').VariableEstacion
@@ -16,29 +16,50 @@ exports.getVarEstAll = async function (req, res, next) {
     .catch(err => res.status(419).send({ message: err.message }))
 }
 
-exports.createVariableEstacion = async function (req, res, next) {
-  let array = []
-  let codigo = req.body.codigoEstacion;
-  for (let a of req.body.variables) {
-    let json = ({
-      EstacionCodigo: codigo,
-      VariableId: parseInt(a.id, 10),
-      HorarioId: parseInt(a.idHora, 10),
-      InstrumentoCodigo: "ISC001"
-    })
-    array.push(json)
+exports.assignVariableEstacion = async function (req, res, next) {
+  try {
+    await Sequelize.sequelize.transaction(async (t) => {
+      console.log(req.body);
+      let array = []
+      let codigo = req.body.codigoEstacion;
+      for (let a of req.body.variablesAgregadas) {
+        let json = ({
+          EstacionCodigo: codigo,
+          VariableId: parseInt(a.id, 10),
+          HorarioId: parseInt(a.idHora, 10),
+          InstrumentoCodigo: "ISC001"
+        })
+        console.log(json);
+        await variableEstacion.findOne({
+          where: json
+        }).then(v => {
+          if (!v) {
+            array.push(json)
+          } else {
+            v.enable = true;
+            v.save()
+          }
+        })
+      }
+      console.log(array);
+      if(array.length !=0){await variableEstacion.bulkCreate(array, { transaction: t })}
+      
+      for (let a of req.body.variablesEliminadas) {
+        await variableEstacion.update({
+          enable: false,
+        }, {
+          where: { VariableId: a.id, EstacionCodigo: codigo }, returning: true, plain: true
+        }, { transaction: t })
+      }
+    });
+    res.status(200).send({ message: "Succesfully assigned" });
+  } catch (error) {
+    res.status(419).send({ message: error.message });
   }
-  await variableEstacion.bulkCreate(array)
-    .then(variableEstacion => {
-      res.status(200).send({ message: "Succesfully updated" });
-      console.log(variableEstacion);
-    })
-    .catch(err => res.status(419).send({ message: err.message }))
 }
 
 exports.getVariablesPorEstacion = async function (req, res, next) {
   console.log(req.params);
-  let variables = require('../models').Variable;
   let variableEstacion = require('../models').VariableEstacion;
 
   await variableEstacion.findAll({
@@ -49,14 +70,14 @@ exports.getVariablesPorEstacion = async function (req, res, next) {
     //variable id, nombre --- horario id,nombre
     attributes: [],
     include: [{
-      model: variables,
+      model: variable,
       required: true,
       attributes: ['id', 'nombre']
     },
     {
-      model: horarios,
+      model: horario,
       required: false,
-      attributes: ['id', 'tipoHorario', 'hora']
+      attributes: ['id', 'tipoHora', 'hora']
     }]
 
   }).then(variableEstacion => {
@@ -71,7 +92,7 @@ exports.disableVariableEstacion = async function (req, res, next) {
       const v = await variableEstacion.update({
         enable: false,
       }, {
-        where: { id: req.params.varestid }, returning: true, plain:true
+        where: { id: req.params.varestid }, returning: true, plain: true
       }, { transaction: t })
       console.log(v[1].id);
       return v;

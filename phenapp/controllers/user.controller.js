@@ -9,7 +9,6 @@ exports.updateUser = async function (req, res, next) {
     await Sequelize.sequelize.transaction(async (t) => {
       const u = await user.update({
         email: req.body.email,
-        password: bcrypt.hashSync(req.body.password, 8),
         nombre: req.body.nombre,
         apellido: req.body.apellido,
         telefono: req.body.telefono
@@ -27,7 +26,7 @@ exports.updateUser = async function (req, res, next) {
 exports.getAll = async function (req, res, next) {
   await user.findAll({
     where: { enable: true },
-    attributes: { exclude: ['enable'] }
+    attributes: { exclude: ['enable','password'] }
   })
     .then(user => {
       res.json(user);
@@ -43,19 +42,23 @@ exports.disableUser = async function (req, res, next) {
       }, {
         where: { id: req.params.userid }, returning: true, plain: true
       }, { transaction: t })
-      console.log(u[1].id);
-      const obs = await observer.update({
-        enable: false,
-      }, {
-        where: { UserId: u[1].id }, returning: true, plain: true
-      }, { transaction: t })
+      console.log(u);
 
-      if (obs) {
-        await estacion.update({
-          JefeId: null,
+
+      if(u[1].role == 'observer'){
+        const obs = await observer.update({
+          enable: false,
         }, {
-          where: { JefeId: obs[1].id }
+          where: { UserId: u[1].id }, returning: true, plain: true
         }, { transaction: t })
+  
+        if (obs) {
+          await estacion.update({
+            JefeId: null,
+          }, {
+            where: { JefeId: obs[1].id }
+          }, { transaction: t })
+        }
       }
       return u;
     });
@@ -73,9 +76,9 @@ exports.updateRole = async function (req, res, next) {
       }, {
         where: {
           id: req.body.usuario
-        }
+        }, returning: true, plain:true
       }, { transaction: t })
-
+      console.log("salida "+u[1].id);
       if (req.body.role == 'observer') {
         await observer.create({
           EstacionCodigo: req.body.estacion,
