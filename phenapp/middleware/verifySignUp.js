@@ -2,6 +2,7 @@ const db = require('../models')
 const ROLES = require('../constants/ENUM').ROLES
 const User = db.User
 
+// eslint-disable-next-line no-undef
 checkDuplicateEmail = (req, res, next) => {
   // Username
   User.findOne({
@@ -19,6 +20,7 @@ checkDuplicateEmail = (req, res, next) => {
   })
 }
 
+// eslint-disable-next-line no-undef
 checkRoleExisted = (req, res, next) => {
   if (req.body.role) {
     if (!ROLES.includes(req.body.role)) {
@@ -32,7 +34,9 @@ checkRoleExisted = (req, res, next) => {
 }
 
 const verifySignUp = {
+  // eslint-disable-next-line no-undef
   checkDuplicateEmail: checkDuplicateEmail,
+  // eslint-disable-next-line no-undef
   checkRoleExisted: checkRoleExisted
 }
 
