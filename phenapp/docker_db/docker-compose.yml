@@ -1,8 +1,8 @@
 version: '3.8'
 services:
-  postgres:
+  db:
     image: $DB_IMAGE:$DB_VERSION
-    container_name: postgres_phen
+    container_name: phenpostgres
     restart: unless-stopped
     ports:
         - "5430:5432"
@@ -10,9 +10,26 @@ services:
         - POSTGRES_USER=$DB_USER
         - POSTGRES_PASSWORD=$DB_PASSWORD
         - POSTGRES_DB=postgres
+    networks:
+        - phen-network
     volumes:
-        - $DB_LOCAL_PATH:$DB_CONTAINER_PATH
-# volumes:
-#   postgres:
+        - postgres:$DB_CONTAINER_PATH
+  backendphen:
+    build:
+        context: .
+        dockerfile:  phen.Dockerfile
+    depends_on:
+        - db
+    container_name: nodephen
+    restart: unless-stopped
+    networks:
+        - phen-network
+    ports:
+        - '4000:4000'
+networks:
+    phen-network:
+        driver: bridge
+volumes:
+  postgres:
 
    
