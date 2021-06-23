@@ -41,7 +41,7 @@ exports.assignVariableEstacion = async function (req, res, next) {
         })
       }
       console.log(array)
-      if (array.length != 0) { await variableEstacion.bulkCreate(array, { transaction: t }) }
+      if (array.length !== 0) { await variableEstacion.bulkCreate(array, { transaction: t }) }
 
       for (const a of req.body.variablesEliminadas) {
         await variableEstacion.update({

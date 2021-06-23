@@ -46,7 +46,7 @@ exports.disableEstacion = async function (req, res, next) {
         where: { EstacionCodigo: e[1].codigo }
       }, { transaction: t }).then(obs => {
         console.log(obs)
-        if (obs != 0) {
+        if (obs !== 0) {
           console.log('ingreso al for')
           for (const o of obs) {
             user.update({

@@ -4,6 +4,7 @@ const db = require('../models')
 const User = db.User
 const Observer = db.Observador
 
+// eslint-disable-next-line no-undef
 verifyToken = (req, res, next) => {
   const token = req.headers['x-access-token']
 
@@ -24,6 +25,7 @@ verifyToken = (req, res, next) => {
   })
 }
 
+// eslint-disable-next-line no-undef
 isAdmin = (req, res, next) => {
   User.findOne({
     where: {
@@ -42,6 +44,7 @@ isAdmin = (req, res, next) => {
   }).catch(err => { res.status(400).send({ message: err.message }) })
 }
 
+// eslint-disable-next-line no-undef
 isAdminByEmail = (req, res, next) => {
   console.log(req.body)
   const e = req.body.email
@@ -63,6 +66,7 @@ isAdminByEmail = (req, res, next) => {
   }).catch(err => { res.status(400).send({ message: err.message }) })
 }
 
+// eslint-disable-next-line no-undef
 isObserver = (req, res, next) => {
   Observer.findOne({
     where: {
@@ -81,6 +85,7 @@ isObserver = (req, res, next) => {
   }).catch(err => { res.status(400).send({ message: err.message }) })
 }
 
+// eslint-disable-next-line no-undef
 isObserverByEmail = (req, res, next) => {
   const e = req.body.email
   User.findOne({
@@ -103,10 +108,15 @@ isObserverByEmail = (req, res, next) => {
 }
 
 const authJwt = {
+  // eslint-disable-next-line no-undef
   verifyToken: verifyToken,
+  // eslint-disable-next-line no-undef
   isAdmin: isAdmin,
+  // eslint-disable-next-line no-undef
   isAdminByEmail: isAdminByEmail,
+  // eslint-disable-next-line no-undef
   isObserverByEmail: isObserverByEmail,
+  // eslint-disable-next-line no-undef
   isObserver: isObserver
 }
 module.exports = authJwt

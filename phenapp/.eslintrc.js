@@ -215,23 +215,7 @@ module.exports = {
     'valid-typeof': ['error', { requireStringLiterals: true }],
     'wrap-iife': ['error', 'any', { functionPrototypeMethods: true }],
     'yield-star-spacing': ['error', 'both'],
-    yoda: ['error', 'never'],
+    yoda: ['error', 'never']
 
-    'import/export': 'error',
-    'import/first': 'error',
-    'import/no-absolute-path': ['error', { esmodule: true, commonjs: true, amd: false }],
-    'import/no-duplicates': 'error',
-    'import/no-named-default': 'error',
-    'import/no-webpack-loader-syntax': 'error',
-
-    'node/handle-callback-err': ['error', '^(err|error)$'],
-    'node/no-callback-literal': 'error',
-    'node/no-deprecated-api': 'error',
-    'node/no-exports-assign': 'error',
-    'node/no-new-require': 'error',
-    'node/no-path-concat': 'error',
-    'node/process-exit-as-throw': 'error',
-
-    'promise/param-names': 'error'
   }
 }
