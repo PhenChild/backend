@@ -18,8 +18,8 @@ values
 --AQUI SE DEBE VERIFICAR EL USERID DEL QUE SERA OBSERVADOR PARA CREARLO EN LA TABLA CON EL SIGUIENTE SQL
 
 INSERT INTO public."Observador"
-("isJefe", "createdAt", "updatedAt", "EstacionCodigo", "UserId")
-VALUES('false', pg_catalog.now(),pg_catalog.now(), 'EST001', 'b52b6b0a-14e7-4951-8cf2-775d396c4eda');
+("enable", "createdAt", "updatedAt", "EstacionCodigo", "UserId")
+VALUES('true', pg_catalog.now(),pg_catalog.now(), 'EST001', 'b52b6b0a-14e7-4951-8cf2-775d396c4eda');
 
 INSERT INTO public."Horario"
 ("tipoHora", hora, "createdAt", "updatedAt")
