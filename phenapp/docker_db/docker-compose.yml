@@ -22,11 +22,10 @@ services:
         - db
     container_name: nodephen
     restart: unless-stopped
-    command: ["./wait-for-it.sh", "db:5430", "npm", "start"]
     networks:
         - phen-network
     ports:
-        - '4000:4000'
+        - '3000:3000'
 networks:
     phen-network:
         driver: bridge
