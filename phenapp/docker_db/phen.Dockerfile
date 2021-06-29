@@ -6,4 +6,3 @@ COPY phenapp/ .
 RUN npm install
 RUN chown -R app /opt/app
 USER app
-CMD [ "npm", "start" ]
