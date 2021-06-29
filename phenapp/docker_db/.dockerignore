@@ -1,6 +1,7 @@
-../../.git/
-../.gitignore
-../node_modules/
+*/.git/
+*/.gitignore
+*/node_modules/
 .git
 .gitignore
 node_modules/
+*/docker_db/
