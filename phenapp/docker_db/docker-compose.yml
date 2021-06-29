@@ -16,7 +16,7 @@ services:
         - postgres:$DB_CONTAINER_PATH
   backendphen:
     build:
-        context: .
+        context: ../
         dockerfile:  phen.Dockerfile
     depends_on:
         - db
