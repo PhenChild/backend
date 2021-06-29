@@ -17,7 +17,7 @@ services:
   backendphen:
     build:
         context: ../
-        dockerfile:  ./docker_db/phephen.Dockerfile
+        dockerfile:  ./docker_db/phen.Dockerfile
     depends_on:
         - db
     container_name: nodephen
