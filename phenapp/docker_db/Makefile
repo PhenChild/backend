@@ -1,7 +1,7 @@
 build:
 	docker build -t postgres:12.7 .
 compose:
-	docker-compose up -d
+	docker-compose up --build -d
 stop:
 	docker-compose stop
 start:
