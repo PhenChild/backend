@@ -3,7 +3,7 @@ module.exports = {
     "username": "phenuser",
     "password": '123.456',
     "database": "dev-phendb",
-    "host": "localhost",
+    "host": "200.110.94.21",
     "dialect": "postgres",
     "port":"5430"
   },
