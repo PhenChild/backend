@@ -31,7 +31,7 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:3000'
+        url: 'http://[::1]:3000'
       }
     ]
   },
