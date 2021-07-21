@@ -57,4 +57,55 @@ const horario = require('../controllers/horario.controller')
 router.get('/getHorarios', [authJwt.verifyToken, authJwt.isAdmin],
   horario.getHorarios)
 
+/**
+ * @swagger
+ * /api/horarios/newHorario:
+ *   post:
+ *     summary: Crea un nuevo horario
+ *     tags: [Horarios]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Horario'
+ *     responses:
+ *       200:
+ *         description: El horario ha sido generado con exito
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Horario'
+ *       500:
+ *         description: Error interno
+ */
+
+router.post('/newHorario', [authJwt.verifyToken, authJwt.isAdmin],
+  horario.newHorario)
+/**
+ * @swagger
+ * /api/horarios/updateHorario:
+ *   post:
+ *     summary: Actualiza la informacion de un horario
+ *     tags: [Horarios]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Horario'
+ *     responses:
+ *       200:
+ *         description: El horario ha sido actualizado con exito
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Instrumento'
+ *       500:
+ *         description: Error interno
+ */
+
+router.post('/updateHorario', [authJwt.verifyToken, authJwt.isAdmin],
+  horario.updateHorario)
+
 module.exports = router

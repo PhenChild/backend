@@ -1,4 +1,5 @@
 const instrumento = require('../models').Instrumento
+const Sequelize = require('../models')
 
 exports.getInstrumentos = async function (req, res) {
   await instrumento.findAll({ where: { enable: 'true' } })
@@ -23,4 +24,34 @@ exports.getInstrumentoPorEstacion = async function (req, res, next) {
     res.json(instrumentoPorEstacion)
   })
     .catch(err => res.status(419).send({ message: err.message }))
+}
+
+exports.newInstrumento = async function (req, res) {
+  console.log(req.body)
+  await instrumento.create({
+    codigo: req.body.codigo,
+    nombre: req.body.nombre,
+    EstacionCodigo: parseInt(req.body.estacion)
+  }).then(instrumento => {
+    res.status(200).send({ message: 'Succesfully created' })
+  }).catch(err => res.status(419).send({ message: err.message }))
+}
+
+exports.updateHorario = async function (req, res, next) {
+  try {
+    console.log(req.body)
+    await Sequelize.sequelize.transaction(async (t) => {
+      const ins = await instrumento.update({
+        nombre: req.body.nombre,
+        EstacionCodigo: parseInt(req.body.estacion),
+        enable: (req.body.enable === 'true')
+      }, {
+        where: { id: req.body.codigo }
+      }, { transaction: t })
+      return ins
+    })
+    res.status(200).send({ message: 'Succesfully updated' })
+  } catch (error) {
+    res.status(400).send({ message: error.message })
+  }
 }

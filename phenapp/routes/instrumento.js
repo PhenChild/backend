@@ -61,6 +61,33 @@ router.get('/getInstrumentos',
 
 /**
  * @swagger
+ * /api/instrumentos/newInstrumento:
+ *   post:
+ *     summary: Crea un nuevo instrumento
+ *     tags: [Horarios]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Instrumento'
+ *     responses:
+ *       200:
+ *         description: El instrumento ha sido generado con exito
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Instrumento'
+ *       500:
+ *         description: Error interno
+ */
+
+router.post('/newInstrumento',
+  [authJwt.verifyToken, authJwt.isAdmin],
+  instrumento.newInstrumento)
+
+/**
+ * @swagger
  * /api/instrumentos/getInstrumentoPorEstacion:
  *   get:
  *     summary: Retorna una lista de los instrumentos de una estacion
@@ -86,5 +113,31 @@ router.get('/getInstrumentos',
 router.get('/getInstrumentoPorEstacion',
   [authJwt.verifyToken, authJwt.isAdmin],
   instrumento.getInstrumentoPorEstacion)
+
+/**
+ * @swagger
+ * /api/instrumentos/updateInstrumento:
+ *   post:
+ *     summary: Actualiza la informacion de un instrumento
+ *     tags: [Intrumentos]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Instrumento'
+ *     responses:
+ *       200:
+ *         description: El instrumento ha sido actualizado con exito
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Instrumento'
+ *       500:
+ *         description: Error interno
+ */
+
+router.post('/updateInstrumento', [authJwt.verifyToken, authJwt.isAdmin],
+  instrumento.updateInstrumento)
 
 module.exports = router
