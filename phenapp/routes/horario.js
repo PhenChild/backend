@@ -82,6 +82,7 @@ router.get('/getHorarios', [authJwt.verifyToken, authJwt.isAdmin],
 
 router.post('/newHorario', [authJwt.verifyToken, authJwt.isAdmin],
   horario.newHorario)
+
 /**
  * @swagger
  * /api/horarios/updateHorario:
@@ -107,5 +108,31 @@ router.post('/newHorario', [authJwt.verifyToken, authJwt.isAdmin],
 
 router.post('/updateHorario', [authJwt.verifyToken, authJwt.isAdmin],
   horario.updateHorario)
+
+/**
+ * @swagger
+ * /api/horarios/disableHorario:
+ *   post:
+ *     summary: Desactiva un horario
+ *     tags: [Horarios]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Horario'
+ *     responses:
+ *       200:
+ *         description: El horario ha sido desactivado con exito
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Instrumento'
+ *       500:
+ *         description: Error interno
+ */
+
+router.post('/disableHorario', [authJwt.verifyToken, authJwt.isAdmin],
+  horario.disableHorario)
 
 module.exports = router

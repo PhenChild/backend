@@ -31,26 +31,42 @@ exports.newInstrumento = async function (req, res) {
   await instrumento.create({
     codigo: req.body.codigo,
     nombre: req.body.nombre,
-    EstacionCodigo: parseInt(req.body.estacion)
+    EstacionCodigo: req.body.EstacionCodigo
   }).then(instrumento => {
     res.status(200).send({ message: 'Succesfully created' })
   }).catch(err => res.status(419).send({ message: err.message }))
 }
 
-exports.updateHorario = async function (req, res, next) {
+exports.updateInstrumento = async function (req, res, next) {
   try {
     console.log(req.body)
     await Sequelize.sequelize.transaction(async (t) => {
       const ins = await instrumento.update({
         nombre: req.body.nombre,
-        EstacionCodigo: parseInt(req.body.estacion),
-        enable: (req.body.enable === 'true')
+        EstacionCodigo: req.body.EstacionCodigo
       }, {
-        where: { id: req.body.codigo }
+        where: { codigo: req.body.codigo }
       }, { transaction: t })
       return ins
     })
     res.status(200).send({ message: 'Succesfully updated' })
+  } catch (error) {
+    res.status(400).send({ message: error.message })
+  }
+}
+
+exports.disableInstrumento = async function (req, res, next) {
+  try {
+    console.log(req.body)
+    await Sequelize.sequelize.transaction(async (t) => {
+      const ins = await instrumento.update({
+        enable: false
+      }, {
+        where: { codigo: req.body.codigo }
+      }, { transaction: t })
+      return ins
+    })
+    res.status(200).send({ message: 'Succesfully disable' })
   } catch (error) {
     res.status(400).send({ message: error.message })
   }

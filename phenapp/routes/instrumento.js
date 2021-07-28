@@ -64,7 +64,7 @@ router.get('/getInstrumentos',
  * /api/instrumentos/newInstrumento:
  *   post:
  *     summary: Crea un nuevo instrumento
- *     tags: [Horarios]
+ *     tags: [Instrumentos]
  *     requestBody:
  *       required: true
  *       content:
@@ -110,7 +110,7 @@ router.post('/newInstrumento',
  *                 $ref: '#/components/schemas/Instrumento'
  */
 
-router.get('/getInstrumentoPorEstacion',
+router.post('/getInstrumentoPorEstacion',
   [authJwt.verifyToken, authJwt.isAdmin],
   instrumento.getInstrumentoPorEstacion)
 
@@ -139,5 +139,31 @@ router.get('/getInstrumentoPorEstacion',
 
 router.post('/updateInstrumento', [authJwt.verifyToken, authJwt.isAdmin],
   instrumento.updateInstrumento)
+
+/**
+ * @swagger
+ * /api/instrumentos/disableInstrumento:
+ *   post:
+ *     summary: Desactiva el instrumento
+ *     tags: [Intrumentos]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Instrumento'
+ *     responses:
+ *       200:
+ *         description: El instrumento ha sido actualizado con exito
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Instrumento'
+ *       500:
+ *         description: Error interno
+ */
+
+router.post('/disableInstrumento', [authJwt.verifyToken, authJwt.isAdmin],
+  instrumento.disableInstrumento)
 
 module.exports = router

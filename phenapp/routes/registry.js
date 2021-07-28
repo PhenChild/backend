@@ -91,7 +91,9 @@ router.post(
  */
 
 router.get('/getRegistros',
-  [authJwt.verifyToken, authJwt.isAdmin],
   registro.getRegistros)
+
+router.get('/getRegistrosEstacion',
+  registro.getRegistrosEstacion)
 
 module.exports = router

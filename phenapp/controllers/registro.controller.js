@@ -1,6 +1,32 @@
 const registros = require('../models').ObservacionVariable
 const VarsEstacion = require('../models').VariableEstacion
 const Observer = require('../models').Observador
+const User = require('../models').User
+const Variable = require('../models').Variable
+
+exports.getRegistrosEstacion = async function (req, res, next) {
+  console.log(req.body)
+
+  await registros.findAll({
+    attributes: ['id', 'valor', 'fechaObservacion'],
+    include: [{
+      model: VarsEstacion,
+      required: true,
+      attributes: ['EstacionCodigo'],
+      include: [{ model: Variable, required: true, attributes: ['nombre'] }]
+    },
+    {
+      model: Observer,
+      required: true,
+      attributes: ['UserId'],
+      include: [{ model: User, required: true, attributes: ['nombre', 'apellido'] }]
+    }]
+
+  }).then(variableEstacion => {
+    res.json(variableEstacion)
+  })
+    .catch(err => res.status(419).send({ message: err.message }))
+}
 
 exports.getRegistros = async function (req, res, next) {
   await registros.findAll()
