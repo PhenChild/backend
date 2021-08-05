@@ -122,4 +122,7 @@ router.get('/getRegistrosEstacion',
 router.post('/estVarHoraFilter',
   registro.estacionVariableHoraFilter)
 
+router.post('/updateRegistry',
+  registro.updateRegistry)
+
 module.exports = router

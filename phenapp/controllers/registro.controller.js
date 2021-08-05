@@ -4,6 +4,7 @@ const Observer = require('../models').Observador
 const User = require('../models').User
 const Variable = require('../models').Variable
 const Op = require('sequelize').Op
+const Sequelize = require('../models')
 
 exports.getRegistrosEstacion = async function (req, res, next) {
   console.log(req.body)
@@ -79,4 +80,22 @@ exports.estacionVariableHoraFilter = async function (req, res, next) {
     res.json(variableEstacion)
   })
     .catch(err => res.status(419).send({ message: err.message }))
+}
+
+exports.updateRegistry = async function (req, res, next) {
+  console.log(req.body)
+  try {
+    console.log(req.body)
+    await Sequelize.sequelize.transaction(async (t) => {
+      const reg = await registros.update({
+        valor: req.body.valor
+      }, {
+        where: { id: parseInt(req.body.id) }
+      }, { transaction: t })
+      return reg
+    })
+    res.status(200).send({ message: 'Succesfully updated' })
+  } catch (error) {
+    res.status(400).send({ message: error.message })
+  }
 }
