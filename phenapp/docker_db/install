@@ -51,7 +51,7 @@ apt-get install make
                 if [ ! -e /usr/bin/docker ]; then
 			echo "$(tput setaf 4)***************** Instaling DOCKER ... ******************************************$(tput setaf 3)"
                         apt-get -y install docker.io --no-install-recommends
-                        groupadd docker
+                        #groupadd docker
                         usermod -aG docker $USER
                         newgrp docker
                 fi

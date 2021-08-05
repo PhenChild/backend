@@ -5,5 +5,7 @@ WORKDIR /opt/app
 COPY package.json .
 COPY package-lock.json .
 RUN npm install
+RUN npm audit fix
+RUN npm install
 COPY . .
 CMD [ "npm", "start" ]
