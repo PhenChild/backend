@@ -3,6 +3,7 @@ const VarsEstacion = require('../models').VariableEstacion
 const Observer = require('../models').Observador
 const User = require('../models').User
 const Variable = require('../models').Variable
+const Op = require('sequelize').Op
 
 exports.getRegistrosEstacion = async function (req, res, next) {
   console.log(req.body)
@@ -59,4 +60,23 @@ exports.createRegistro = async function (req, res, next) {
   } else {
     res.status(400).send({ message: 'Forbidden station or null variable' })
   }
+}
+
+exports.estacionVariableHoraFilter = async function (req, res, next) {
+  console.log(req.body)
+
+  await registros.findAll({
+    attributes: ['id', 'valor', 'fechaObservacion'],
+    where: { fechaObservacion: { [Op.between]: [req.body.fechaInicio, req.body.fechaFin] } },
+    include: [{
+      model: VarsEstacion,
+      required: true,
+      attributes: ['EstacionCodigo'],
+      where: { EstacionCodigo: req.body.codigoEstacion },
+      include: [{ model: Variable, required: true, where: { id: parseInt(req.body.idVariable) }, attributes: ['nombre'] }]
+    }]
+  }).then(variableEstacion => {
+    res.json(variableEstacion)
+  })
+    .catch(err => res.status(419).send({ message: err.message }))
 }

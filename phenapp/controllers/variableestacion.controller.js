@@ -16,9 +16,9 @@ exports.getVarEstAll = async function (req, res, next) {
 }
 
 exports.assignVariableEstacion = async function (req, res, next) {
+  console.log(req.body)
   try {
     await Sequelize.sequelize.transaction(async (t) => {
-      console.log(req.body)
       const array = []
       const codigo = req.body.codigoEstacion
       for (const a of req.body.variablesAgregadas) {
@@ -26,7 +26,7 @@ exports.assignVariableEstacion = async function (req, res, next) {
           EstacionCodigo: codigo,
           VariableId: parseInt(a.id, 10),
           HorarioId: parseInt(a.idHora, 10),
-          InstrumentoCodigo: 'ISC001'
+          InstrumentoCodigo: a.InstrumentoCodigo
         })
         console.log(json)
         await variableEstacion.findOne({
@@ -59,7 +59,6 @@ exports.assignVariableEstacion = async function (req, res, next) {
 
 exports.getVariablesPorEstacion = async function (req, res, next) {
   console.log(req.params)
-  const variableEstacion = require('../models').VariableEstacion
 
   await variableEstacion.findAll({
     where: {
@@ -67,7 +66,6 @@ exports.getVariablesPorEstacion = async function (req, res, next) {
       enable: true
     },
     // variable id, nombre --- horario id,nombre
-    attributes: [],
     include: [{
       model: variable,
       required: true,

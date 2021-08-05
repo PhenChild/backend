@@ -69,7 +69,6 @@ const estacion = require('../controllers/estacion.controller')
  */
 
 router.get('/getAll',
-  [authJwt.verifyToken, authJwt.isAdmin],
   estacion.getEstaciones)
 
 /**
