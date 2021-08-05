@@ -96,4 +96,33 @@ router.get('/getRegistros',
 router.get('/getRegistrosEstacion',
   registro.getRegistrosEstacion)
 
+/**
+ * @swagger
+ * /api/registry/estVarHoraFilter:
+ *   post:
+ *     summary: Filtra los registros dependiendo de la estacion, variable y fechas ingresadas
+ *     tags: [Registros]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Registro'
+ *     responses:
+ *       200:
+ *         description: Se ha filtrado con exito
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Registro'
+ *       500:
+ *         description: Error interno
+ */
+
+router.post('/estVarHoraFilter',
+  registro.estacionVariableHoraFilter)
+
+router.post('/updateRegistry',
+  registro.updateRegistry)
+
 module.exports = router

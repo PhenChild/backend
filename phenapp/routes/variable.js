@@ -66,7 +66,6 @@ const variable = require('../controllers/variable.controller')
  */
 
 router.get('/getVariables',
-  [authJwt.verifyToken, authJwt.isAdmin],
   variable.getVariables)
 
 /**

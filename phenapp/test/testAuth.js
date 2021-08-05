@@ -8,7 +8,7 @@ chai.use(chaiHttp)
 describe('/GET NoTokenProvided', () => {
   console.log('Prueba de ingreso sin autorizacion')
   chai.request(server)
-    .get('/api/estaciones/getAll')
+    .get('/api/users/getUsers')
     .end((err, res) => {
       console.log(res.body)
     })

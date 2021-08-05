@@ -117,7 +117,6 @@ router.post('/assign',
  */
 
 router.get('/getVariablesPorEstacion/:codigo',
-  [authJwt.verifyToken, authJwt.isAdmin],
   varsEst.getVariablesPorEstacion)
 
 /**
