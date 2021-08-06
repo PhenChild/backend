@@ -84,7 +84,7 @@ router.get('/getAll',
  */
 
 router.get(
-  '/get/:userid',
+  '/get',
   [authJwt.verifyToken],
   observador.getObserver
 )
@@ -173,5 +173,15 @@ router.get(
 router.get('/getEstacionPorObs',
   [authJwt.verifyToken, authJwt.isObserver],
   observador.getEstacionPorObs)
+
+router.post(
+  '/update',
+  [authJwt.verifyToken],
+  observador.updateObserver)
+
+router.post(
+  '/updatePass',
+  [authJwt.verifyToken],
+  observador.updatePass)
 
 module.exports = router
