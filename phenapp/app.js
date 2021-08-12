@@ -18,6 +18,7 @@ const varestRouter = require('./routes/variableestacion')
 const horaRouter = require('./routes/horario')
 const instrRouter = require('./routes/instrumento')
 const varRouter = require('./routes/variable')
+const logRouter = require('./routes/log')
 
 const app = express()
 
@@ -71,6 +72,7 @@ app.use('/api/vars-estaciones', varestRouter)
 app.use('/api/horarios', horaRouter)
 app.use('/api/instrumentos', instrRouter)
 app.use('/api/variables', varRouter)
+app.use('/api/log', logRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

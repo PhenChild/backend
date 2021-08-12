@@ -123,6 +123,7 @@ router.post('/estVarHoraFilter',
   registro.estacionVariableHoraFilter)
 
 router.post('/updateRegistry',
+  [authJwt.verifyToken, authJwt.isObserver],
   registro.updateRegistry)
 
 module.exports = router
