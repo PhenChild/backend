@@ -15,6 +15,8 @@ module.exports = (sequelize, DataTypes) => {
   };
   Log.init({
     idRegistro: DataTypes.INTEGER,
+    valorPrevio: DataTypes.STRING,
+    valorNuevo: DataTypes.STRING,
     nombreUser: DataTypes.STRING,
     fechaCambio: DataTypes.DATE,
     comentario: DataTypes.STRING

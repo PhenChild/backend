@@ -16,6 +16,8 @@ exports.newLog = async function (req, res, next) {
   await log.create({
     idRegistro: req.body.registro,
     nombreUser: req.body.user,
+    valorPrevio: req.body.valorPrevio,
+    valorNuevo: req.body.valorNuevo,
     fechaCambio: req.body.fecha,
     comentario: req.body.comentario
   }).then(log => {
