@@ -37,6 +37,7 @@ exports.disableVariable = async function (req, res, next) {
 exports.createVariable = async function (req, res, next) {
   await variables.create({
     nombre: req.body.nombre,
+    descripcion: req.body.descripcion,
     unidad: req.body.unidad,
     maximo: parseInt(req.body.max, 10),
     minimo: parseInt(req.body.min, 10),
@@ -55,6 +56,7 @@ exports.updateVariable = async function (req, res, next) {
       return res.status(400).send({ message: "Variable isn't defined" })
     }
     variable.nombre = req.body.nombre
+    variable.descripcion = req.body.descripcion
     variable.unidad = req.body.unidad
     variable.maximo = parseInt(req.body.max, 10)
     variable.minimo = parseInt(req.body.min, 10)

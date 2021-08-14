@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   };
   Variable.init({
     nombre: DataTypes.STRING,
+    descripcion: DataTypes.STRING,
     unidad: DataTypes.STRING,
     maximo: DataTypes.FLOAT,
     minimo: DataTypes.FLOAT,

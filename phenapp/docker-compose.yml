@@ -1,0 +1,12 @@
+version: '3.3'
+services:
+  backendphen:
+    build:
+        context: .
+        dockerfile:  ./phen.Dockerfile
+    container_name: nodephen
+    restart: unless-stopped
+    networks:
+        - phen-network
+    ports:
+        - '3000:3000'

@@ -117,7 +117,7 @@ exports.getVariableObs = async function (req, res, next) {
       }, {
         model: horario, required: true, attributes: ['tipoHora', 'hora']
       }, {
-        model: variable, required: true, attributes: ['nombre', 'unidad', 'maximo', 'minimo', 'tipoDato']
+        model: variable, required: true, attributes: ['nombre','descripcion','unidad', 'maximo', 'minimo', 'tipoDato']
       }, {
         model: instrumento, required: false, attributes: ['nombre']
       }]
