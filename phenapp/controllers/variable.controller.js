@@ -24,8 +24,9 @@ exports.disableVariable = async function (req, res, next) {
         enable: false
       }, {
         where: { VariableId: v[1].id }, returning: true, plain: true
-      }, { transaction: t })})
-      
+      }, { transaction: t })}).catch(err => {
+        res.status(500).send({ message: err.message })
+      })
     })
     res.status(200).send({ message: 'Succesfully deleted' })
   } catch (error) {

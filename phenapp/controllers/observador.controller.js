@@ -74,6 +74,8 @@ exports.updatePass = async function (req, res, next) {
         }, {
           where: { id: req.userId }
         }, { transaction: t })
+      }).catch(err => {
+        res.status(400).send({ message: err.message })
       })
       return usr
     })

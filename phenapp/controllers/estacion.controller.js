@@ -56,6 +56,8 @@ exports.disableEstacion = async function (req, res, next) {
             }, { transaction: t })
           }
         }
+      }).catch(err => {
+        res.status(400).send({ message: err.message })
       })
       return e
     })

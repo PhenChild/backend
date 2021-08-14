@@ -38,6 +38,8 @@ exports.assignVariableEstacion = async function (req, res, next) {
             v.enable = true
             v.save()
           }
+        }).catch(err => {
+          res.status(400).send({ message: err.message })
         })
       }
       console.log(array)

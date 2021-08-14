@@ -17,6 +17,8 @@ checkDuplicateEmail = (req, res, next) => {
       return
     }
     next()
+  }).catch(err => {
+    res.status(400).send({ message: err.message })
   })
 }
 
