@@ -51,41 +51,59 @@ INSERT INTO public."Horario"
 ("tipoHora", hora, "createdAt", "updatedAt")
 VALUES('parcial'::"enum_Horario_tipoHora", '14:00', pg_catalog.now(),pg_catalog.now());
 
+INSERT INTO public."TipoInstrumento"
+(tipo, "createdAt", "updatedAt")
+VALUES('Termometro Humedo', pg_catalog.now(),pg_catalog.now());
+
+INSERT INTO public."TipoInstrumento"
+(tipo, "createdAt", "updatedAt")
+VALUES('Pluviometro', pg_catalog.now(),pg_catalog.now());
+
+INSERT INTO public."TipoInstrumento"
+(tipo, "createdAt", "updatedAt")
+VALUES('Veleta', pg_catalog.now(),pg_catalog.now());
+
+-----
 INSERT INTO public."Instrumento"
-(codigo, nombre, "createdAt", "updatedAt", "EstacionCodigo")
-VALUES('ISC001', 'Termometro Humedo', pg_catalog.now(),pg_catalog.now(), 'EST1064');
+(codigo, nombre, "createdAt", "updatedAt", "EstacionCodigo", "TipoInstrumentoId")
+VALUES('ISC001', 'Termometro Humedo Mercurio', pg_catalog.now(),pg_catalog.now(), 'EST1064',1);
 
 INSERT INTO public."Instrumento"
-(codigo, nombre, "createdAt", "updatedAt", "EstacionCodigo")
-VALUES('ISC002', 'Pluviometro', pg_catalog.now(),pg_catalog.now(), 'EST1064');
+(codigo, nombre, "createdAt", "updatedAt", "EstacionCodigo", "TipoInstrumentoId")
+VALUES('ISC002', 'Pluviometro', pg_catalog.now(),pg_catalog.now(), 'EST1064',2);
 
 INSERT INTO public."Instrumento"
-(codigo, nombre, "createdAt", "updatedAt", "EstacionCodigo")
-VALUES('ISC003', 'Veleta', pg_catalog.now(),pg_catalog.now(), 'EST1064');
+(codigo, nombre, "createdAt", "updatedAt", "EstacionCodigo", "TipoInstrumentoId")
+VALUES('ISC003', 'Veleta', pg_catalog.now(),pg_catalog.now(), 'EST1064',3);
+
+-----
+INSERT INTO public."Variable"
+(nombre, descripcion, unidad, maximo, minimo, "tipoDato", "createdAt", "updatedAt")
+VALUES('temperatura','', 'grados C', 45, 20, 'float', pg_catalog.now(),pg_catalog.now());
 
 INSERT INTO public."Variable"
-(nombre, unidad, maximo, minimo, "tipoDato", "createdAt", "updatedAt")
-VALUES('temperatura', 'grados C', 45, 20, 'float', pg_catalog.now(),pg_catalog.now());
+(nombre, descripcion, unidad, maximo, minimo, "tipoDato", "createdAt", "updatedAt")
+VALUES('precipitacion','', 'prep', 1000, 0, 'float', pg_catalog.now(),pg_catalog.now());
 
 INSERT INTO public."Variable"
-(nombre, unidad, maximo, minimo, "tipoDato", "createdAt", "updatedAt")
-VALUES('precipitacion', 'prep', 1000, 0, 'float', pg_catalog.now(),pg_catalog.now());
+(nombre, descripcion, unidad, "tipoDato", "createdAt", "updatedAt")
+VALUES('DireccionViento', '', 'punto cardinal', 'rosa', pg_catalog.now(),pg_catalog.now());
 
 INSERT INTO public."Variable"
-(nombre, unidad, "tipoDato", "createdAt", "updatedAt")
-VALUES('DireccionViento', 'punto cardinal', 'rosa', pg_catalog.now(),pg_catalog.now());
+(nombre, descripcion, unidad, "tipoDato", "createdAt", "updatedAt")
+VALUES('Nevada', '', 'clima', 'boolean', pg_catalog.now(),pg_catalog.now());
 
 INSERT INTO public."Variable"
-(nombre, unidad, "tipoDato", "createdAt", "updatedAt")
-VALUES('Nevada', 'clima', 'boolean', pg_catalog.now(),pg_catalog.now());
+(nombre, descripcion, unidad, "tipoDato", "createdAt", "updatedAt")
+VALUES('Granizada', '', 'clima', 'boolean', pg_catalog.now(),pg_catalog.now());
 
 INSERT INTO public."Variable"
-(nombre, unidad, "tipoDato", "createdAt", "updatedAt")
-VALUES('Granizada', 'clima', 'boolean', pg_catalog.now(),pg_catalog.now());
+(nombre, descripcion, unidad, "tipoDato", "createdAt", "updatedAt")
+VALUES('Tormenta electrica', '', 'clima', 'boolean', pg_catalog.now(),pg_catalog.now());
 
 INSERT INTO public."Variable"
-(nombre, unidad, "tipoDato", "createdAt", "updatedAt")
-VALUES('Tormenta electrica', 'clima', 'boolean', pg_catalog.now(),pg_catalog.now());
+(nombre, descripcion, unidad, "tipoDato", "createdAt", "updatedAt")
+VALUES('Percepcion Calor', 'Seleccione su percepcion sobre el calor del ambiente en la escala del 1 al 5, 1 representa poco intenso y 5 extramademente intenso', 'clima', 'likert', pg_catalog.now(),pg_catalog.now());
 
 
 ------------
@@ -108,6 +126,10 @@ VALUES(true, 'EST1064', 5, 1, pg_catalog.now(),pg_catalog.now());
 INSERT INTO public."VariableEstacion"
 ("enable", "EstacionCodigo", "VariableId", "HorarioId", "createdAt", "updatedAt")
 VALUES(true, 'EST1064', 6, 1, pg_catalog.now(),pg_catalog.now());
+
+INSERT INTO public."VariableEstacion"
+("enable", "EstacionCodigo", "VariableId", "HorarioId", "createdAt", "updatedAt")
+VALUES(true, 'EST1064', 7, 1, pg_catalog.now(),pg_catalog.now());
 
 INSERT INTO public."VariableEstacion"
 ("enable", "EstacionCodigo", "VariableId", "HorarioId", "InstrumentoCodigo", "createdAt", "updatedAt")

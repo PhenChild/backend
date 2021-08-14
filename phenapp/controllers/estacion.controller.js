@@ -18,7 +18,7 @@ exports.createEstacion = async function (req, res, next) {
   console.log(req.body)
   const point = { type: 'Point', coordinates: [parseFloat(req.body.latitud), parseFloat(req.body.longitud)] }
   await estacion.create({
-    codigo: req.body.codigoEstacion,
+    codigo: req.body.codigo,
     nombreEstacion: req.body.nombreEstacion,
     posicion: point,
     altitud: parseFloat(req.body.altitud),

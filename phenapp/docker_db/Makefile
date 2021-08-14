@@ -1,9 +1,7 @@
 build:
 	docker build -t postgres:12.7 .
 compose:
-	docker-compose up --build -d
-compose-complete:
-	docker-compose up -f ./docker-compose-complete.yaml --build -d
+	docker-compose up --build --remove-orphans -d
 stop:
 	docker-compose stop
 start:
