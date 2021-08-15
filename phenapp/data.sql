@@ -160,6 +160,14 @@ INSERT INTO public."ObservacionVariable"
 ("valor", "VariableEstacionId", "ObservadorId", "fechaObservacion", "createdAt", "updatedAt")
 VALUES('500', 9, 1, pg_catalog.now(),pg_catalog.now(),pg_catalog.now());
 
+INSERT INTO public."ObservacionVariable"
+("valor", "VariableEstacionId", "ObservadorId", "fechaObservacion", "createdAt", "updatedAt")
+VALUES('26', 7, 1, pg_catalog.now(),pg_catalog.now(),pg_catalog.now());
+
+INSERT INTO public."ObservacionVariable"
+("valor", "VariableEstacionId", "ObservadorId", "fechaObservacion", "createdAt", "updatedAt")
+VALUES('20', 7, 1, '2021-08-12 19:10:25',pg_catalog.now(),pg_catalog.now());
+
 --UPDATE public."User" SET "password"='$2y$12$u5VFrmOxhrimpCr58fWuW.QWvKntHMj5LAb7L.1ec4kmH/iH8P5r.' WHERE id = 'ce596202-12f1-4b3f-9dbf-0fbe81c082c7'::uuid;
 --
 --UPDATE public."User" SET "role"='observer'::"enum_User_role" WHERE id='d2ddffa6-4469-4152-a45a-2bddf79815fe'::uuid;

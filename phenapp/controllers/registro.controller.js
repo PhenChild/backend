@@ -89,7 +89,8 @@ exports.estacionVariableHoraFilter = async function (req, res, next) {
       required: true,
       attributes: ['EstacionCodigo'],
       where: { EstacionCodigo: req.body.codigoEstacion },
-      include: [{ model: Variable, required: true, where: { id: parseInt(req.body.idVariable) }, attributes: ['nombre'] }]
+      include: [{ model: Variable, required: true, where: { id: parseInt(req.body.idVariable) }, attributes: ['nombre'] },
+      { model: Horario, required: true, attributes: ['tipoHora','hora'] }]
     }]
   }).then(variableEstacion => {
     res.json(variableEstacion)
