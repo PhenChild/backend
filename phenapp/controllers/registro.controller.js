@@ -1,5 +1,6 @@
 const registros = require('../models').ObservacionVariable
 const VarsEstacion = require('../models').VariableEstacion
+const Horario = require('../models').Horario
 const Observer = require('../models').Observador
 const User = require('../models').User
 const Variable = require('../models').Variable
@@ -7,6 +8,7 @@ const Op = require('sequelize').Op
 const Sequelize = require('../models')
 
 exports.getRegistrosEstacion = async function (req, res, next) {
+  try{
   console.log(req.body)
 
   await registros.findAll({
@@ -15,7 +17,8 @@ exports.getRegistrosEstacion = async function (req, res, next) {
       model: VarsEstacion,
       required: true,
       attributes: ['EstacionCodigo'],
-      include: [{ model: Variable, required: true, attributes: ['nombre'] }]
+      include: [{ model: Variable, required: true, attributes: ['nombre'] },
+      { model: Horario, required: true, attributes: ['tipoHora','hora'] }]
     },
     {
       model: Observer,
@@ -28,17 +31,25 @@ exports.getRegistrosEstacion = async function (req, res, next) {
     res.json(variableEstacion)
   })
     .catch(err => res.status(419).send({ message: err.message }))
+  } catch (error) {
+    res.status(400).send({ message: error.message })
+  }
 }
 
 exports.getRegistros = async function (req, res, next) {
+  try{
   await registros.findAll()
     .then(registros => {
       res.json(registros)
     })
     .catch(err => res.json(err.message))
+  } catch (error) {
+    res.status(400).send({ message: error.message })
+  }
 }
 
 exports.createRegistro = async function (req, res, next) {
+  try{
   const variable = VarsEstacion.findByPk(req.body.VariableEstacionId)
   const observador = Observer.findByPk(req.obsId)
 
@@ -61,9 +72,13 @@ exports.createRegistro = async function (req, res, next) {
   } else {
     res.status(400).send({ message: 'Forbidden station or null variable' })
   }
+} catch (error) {
+  res.status(400).send({ message: error.message })
+}
 }
 
 exports.estacionVariableHoraFilter = async function (req, res, next) {
+  try{
   console.log(req.body)
 
   await registros.findAll({
@@ -80,10 +95,12 @@ exports.estacionVariableHoraFilter = async function (req, res, next) {
     res.json(variableEstacion)
   })
     .catch(err => res.status(419).send({ message: err.message }))
+  } catch (error) {
+    res.status(400).send({ message: error.message })
+  }
 }
 
 exports.updateRegistry = async function (req, res, next) {
-  console.log(req.body)
   try {
     console.log(req.body)
     await Sequelize.sequelize.transaction(async (t) => {

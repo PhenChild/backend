@@ -2,20 +2,28 @@ const tipo = require('../models').TipoInstrumento
 const Sequelize = require('../models')
 
 exports.getAll = async function (req, res) {
-  await tipo.findAll({ where: { enable: 'true' } })
-    .then(tipo => {
-      res.json(tipo)
-    })
-    .catch(err => res.status(419).send({ message: err.message }))
+  try {
+    await tipo.findAll({ where: { enable: 'true' } })
+      .then(tipo => {
+        res.json(tipo)
+      })
+      .catch(err => res.status(419).send({ message: err.message }))
+  } catch (error) {
+    res.status(400).send({ message: error.message })
+  }
 }
 
 exports.newTipo = async function (req, res) {
-  console.log(req.body)
-  await tipo.create({
-    tipo: req.body.tipo
-  }).then(tipo => {
-    res.status(200).send({ message: 'Succesfully created' })
-  }).catch(err => res.status(419).send({ message: err.message }))
+  try {
+    console.log(req.body)
+    await tipo.create({
+      tipo: req.body.tipo
+    }).then(tipo => {
+      res.status(200).send({ message: 'Succesfully created' })
+    }).catch(err => res.status(419).send({ message: err.message }))
+  } catch (error) {
+    res.status(400).send({ message: error.message })
+  }
 }
 
 exports.updateTipo = async function (req, res, next) {

@@ -5,38 +5,46 @@ const Sequelize = require('../models')
 const bcrypt = require('bcryptjs')
 
 exports.getAll = async function (req, res, next) {
-  await observer.findAll({
-    where: { enable: true },
-    include: [{
-      model: estacion, required: false
-    }, {
-      model: user, required: false, where: { enable: 'true' }
-    }]
-  })
-    .then(observadores => {
-      res.json(observadores)
+  try {
+    await observer.findAll({
+      where: { enable: true },
+      include: [{
+        model: estacion, required: false
+      }, {
+        model: user, required: false, where: { enable: 'true' }
+      }]
     })
-    .catch(err => res.json(err))
+      .then(observadores => {
+        res.json(observadores)
+      })
+      .catch(err => res.json(err))
+  } catch (error) {
+    res.status(400).send({ message: error.message })
+  }
 }
 
 exports.getObserver = async function (req, res, next) {
-  await observer.findOne({
-    where: {
-      UserId: req.userId,
-      enable: true
-    },
-    attributes: ['id'],
-    include: [{
-      model: user, required: false, attributes: ['email', 'nombre', 'apellido', 'telefono']
-    }]
-  })
-    .then(obs => {
-      if (!obs) {
-        return res.status(400).send({ message: "there isn't an active observer for this user" })
-      }
-      res.json(obs)
+  try {
+    await observer.findOne({
+      where: {
+        UserId: req.userId,
+        enable: true
+      },
+      attributes: ['id'],
+      include: [{
+        model: user, required: false, attributes: ['email', 'nombre', 'apellido', 'telefono']
+      }]
     })
-    .catch(err => res.status(400).send({ message: err.message }))
+      .then(obs => {
+        if (!obs) {
+          return res.status(400).send({ message: "there isn't an active observer for this user" })
+        }
+        res.json(obs)
+      })
+      .catch(err => res.status(400).send({ message: err.message }))
+  } catch (error) {
+    res.status(400).send({ message: error.message })
+  }
 }
 
 exports.updateObserver = async function (req, res, next) {
@@ -86,39 +94,51 @@ exports.updatePass = async function (req, res, next) {
 }
 
 exports.createObservador = async (req, res) => {
-  await observer.create({
-    EstacionCodigo: req.body.codigoestacion,
-    UserId: req.body.userid
-  }).then(obs => {
-    res.send({ message: 'Observer succesfully created!' })
-  })
-    .catch(err => res.status(400).send({ message: err.message }))
+  try {
+    await observer.create({
+      EstacionCodigo: req.body.codigoestacion,
+      UserId: req.body.userid
+    }).then(obs => {
+      res.send({ message: 'Observer succesfully created!' })
+    })
+      .catch(err => res.status(400).send({ message: err.message }))
+  } catch (error) {
+    res.status(400).send({ message: error.message })
+  }
 }
 
 exports.getObservadoresPorEstacion = async (req, res) => {
-  await observer.findAll({
-    where: {
-      EstacionCodigo: req.params.codigo,
-      enable: true
-    },
-    attributes: ['id'],
-    include: [{ model: user, required: true, attributes: ['nombre', 'apellido', 'email'] }]
-  }).then(obs => {
-    res.json(obs)
-  })
-    .catch(err => res.json(err.message))
+  try {
+    await observer.findAll({
+      where: {
+        EstacionCodigo: req.params.codigo,
+        enable: true
+      },
+      attributes: ['id'],
+      include: [{ model: user, required: true, attributes: ['nombre', 'apellido', 'email'] }]
+    }).then(obs => {
+      res.json(obs)
+    })
+      .catch(err => res.json(err.message))
+  } catch (error) {
+    res.status(400).send({ message: error.message })
+  }
 }
 
 exports.getEstacionPorObs = async function (req, res, next) {
-  await observer.findOne({
-    where: { UserId: req.userId },
-    attributes: ['id'],
-    include: {
-      model: estacion, required: true, attributes: ['codigo', 'nombreEstacion', 'posicion']
-    }
-  }).then(obs => {
-    res.json(obs)
-  }).catch(err => res.status(500).send({
-    message: err
-  }))
+  try {
+    await observer.findOne({
+      where: { UserId: req.userId },
+      attributes: ['id'],
+      include: {
+        model: estacion, required: true, attributes: ['codigo', 'nombreEstacion', 'posicion']
+      }
+    }).then(obs => {
+      res.json(obs)
+    }).catch(err => res.status(500).send({
+      message: err
+    }))
+  } catch (error) {
+    res.status(400).send({ message: error.message })
+  }
 }

@@ -5,6 +5,7 @@ const observer = require('../models').Observador
 const user = require('../models').User
 
 exports.getEstaciones = async function (req, res, next) {
+  try{
   await estacion.findAll({
     where: { enable: true }
   })
@@ -12,9 +13,13 @@ exports.getEstaciones = async function (req, res, next) {
       res.json(estaciones)
     })
     .catch(err => res.json(err))
+  } catch (error) {
+    res.status(400).send({ message: error.message })
+  }
 }
 
 exports.createEstacion = async function (req, res, next) {
+  try{
   console.log(req.body)
   const point = { type: 'Point', coordinates: [parseFloat(req.body.latitud), parseFloat(req.body.longitud)] }
   await estacion.create({
@@ -27,6 +32,9 @@ exports.createEstacion = async function (req, res, next) {
   }).then(variableEstacion => {
     res.status(200).send({ message: 'Succesfully created' })
   }).catch(err => res.status(419).send({ message: err.message }))
+} catch (error) {
+  res.status(400).send({ message: error.message })
+}
 }
 
 exports.disableEstacion = async function (req, res, next) {
@@ -60,6 +68,8 @@ exports.disableEstacion = async function (req, res, next) {
         res.status(400).send({ message: err.message })
       })
       return e
+    }).catch(err => {
+      res.status(400).send({ message: err.message })
     })
     res.status(200).send({ message: 'Succesfully deleted' })
   } catch (error) {
@@ -81,8 +91,12 @@ exports.updateEstacion = async function (req, res, next) {
         JefeId: req.body.jefeid
       }, {
         where: { codigo: req.body.codigo }
-      }, { transaction: t })
+      }, { transaction: t }).catch(err => {
+        res.status(400).send({ message: err.message })
+      })
       return est
+    }).catch(err => {
+      res.status(400).send({ message: err.message })
     })
     res.status(200).send({ message: 'Succesfully updated' })
   } catch (error) {

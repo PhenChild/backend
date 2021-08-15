@@ -8,15 +8,18 @@ const variable = require('../models').Variable
 const instrumento = require('../models').Instrumento
 
 exports.getVarEstAll = async function (req, res, next) {
-  await variableEstacion.findAll({ where: { enable: true } })
-    .then(variableEstacion => {
-      res.json(variableEstacion)
-    })
-    .catch(err => res.status(419).send({ message: err.message }))
+  try {
+    await variableEstacion.findAll({ where: { enable: true } })
+      .then(variableEstacion => {
+        res.json(variableEstacion)
+      })
+      .catch(err => res.status(419).send({ message: err.message }))
+  } catch (error) {
+    res.status(400).send({ message: error.message })
+  }
 }
 
 exports.assignVariableEstacion = async function (req, res, next) {
-  console.log(req.body)
   try {
     await Sequelize.sequelize.transaction(async (t) => {
       const array = []
@@ -60,29 +63,31 @@ exports.assignVariableEstacion = async function (req, res, next) {
 }
 
 exports.getVariablesPorEstacion = async function (req, res, next) {
-  console.log(req.params)
+  try {
+    await variableEstacion.findAll({
+      where: {
+        EstacionCodigo: req.params.codigo,
+        enable: true
+      },
+      // variable id, nombre --- horario id,nombre
+      include: [{
+        model: variable,
+        required: true,
+        attributes: ['id', 'nombre']
+      },
+      {
+        model: horario,
+        required: false,
+        attributes: ['id', 'tipoHora', 'hora']
+      }]
 
-  await variableEstacion.findAll({
-    where: {
-      EstacionCodigo: req.params.codigo,
-      enable: true
-    },
-    // variable id, nombre --- horario id,nombre
-    include: [{
-      model: variable,
-      required: true,
-      attributes: ['id', 'nombre']
-    },
-    {
-      model: horario,
-      required: false,
-      attributes: ['id', 'tipoHora', 'hora']
-    }]
-
-  }).then(variableEstacion => {
-    res.json(variableEstacion)
-  })
-    .catch(err => res.status(419).send({ message: err.message }))
+    }).then(variableEstacion => {
+      res.json(variableEstacion)
+    })
+      .catch(err => res.status(419).send({ message: err.message }))
+  } catch (error) {
+    res.status(400).send({ message: error.message })
+  }
 }
 
 exports.disableVariableEstacion = async function (req, res, next) {
@@ -103,32 +108,36 @@ exports.disableVariableEstacion = async function (req, res, next) {
 }
 
 exports.getVariableObs = async function (req, res, next) {
-  await observer.findOne({
-    where: { UserId: req.userId },
-    include: { model: estacion, required: true, attributes: ['codigo', 'nombreEstacion', 'posicion'] }
-  }).then(obs => {
-    const codigoEstacion = obs.EstacionCodigo
-    variableEstacion.findAll({
-      where: {
-        EstacionCodigo: codigoEstacion,
-        enable: true
-      },
-      attributes: ['id'],
-      include: [{
-        model: estacion, required: true, attributes: ['codigo']
-      }, {
-        model: horario, required: true, attributes: ['tipoHora', 'hora']
-      }, {
-        model: variable, required: true, attributes: ['nombre','descripcion','unidad', 'maximo', 'minimo', 'tipoDato']
-      }, {
-        model: instrumento, required: false, attributes: ['nombre']
-      }]
-    })
-      .then(info => {
-        res.json(info)
+  try {
+    await observer.findOne({
+      where: { UserId: req.userId },
+      include: { model: estacion, required: true, attributes: ['codigo', 'nombreEstacion', 'posicion'] }
+    }).then(obs => {
+      const codigoEstacion = obs.EstacionCodigo
+      variableEstacion.findAll({
+        where: {
+          EstacionCodigo: codigoEstacion,
+          enable: true
+        },
+        attributes: ['id'],
+        include: [{
+          model: estacion, required: true, attributes: ['codigo']
+        }, {
+          model: horario, required: true, attributes: ['tipoHora', 'hora']
+        }, {
+          model: variable, required: true, attributes: ['nombre', 'descripcion', 'unidad', 'maximo', 'minimo', 'tipoDato']
+        }, {
+          model: instrumento, required: false, attributes: ['nombre']
+        }]
       })
-      .catch(err => res.json(err))
-  }).catch(err => res.status(500).send({
-    message: err.message
-  }))
+        .then(info => {
+          res.json(info)
+        })
+        .catch(err => res.json(err))
+    }).catch(err => res.status(500).send({
+      message: err.message
+    }))
+  } catch (error) {
+    res.status(400).send({ message: error.message })
+  }
 }

@@ -2,14 +2,19 @@ const instrumento = require('../models').Instrumento
 const Sequelize = require('../models')
 
 exports.getInstrumentos = async function (req, res) {
+  try{
   await instrumento.findAll({ where: { enable: 'true' } })
     .then(instrumento => {
       res.json(instrumento)
     })
     .catch(err => res.status(419).send({ message: err.message }))
+  } catch (error) {
+    res.status(400).send({ message: error.message })
+  }
 }
 
 exports.getInstrumentoPorEstacion = async function (req, res, next) {
+  try{
   const estaciones = require('../models').Estacion
   await instrumento.findAll({
     where: {
@@ -24,9 +29,13 @@ exports.getInstrumentoPorEstacion = async function (req, res, next) {
     res.json(instrumentoPorEstacion)
   })
     .catch(err => res.status(419).send({ message: err.message }))
+  } catch (error) {
+    res.status(400).send({ message: error.message })
+  }
 }
 
 exports.newInstrumento = async function (req, res) {
+  try{
   console.log(req.body)
   await instrumento.create({
     codigo: req.body.codigo,
@@ -35,6 +44,9 @@ exports.newInstrumento = async function (req, res) {
   }).then(instrumento => {
     res.status(200).send({ message: 'Succesfully created' })
   }).catch(err => res.status(419).send({ message: err.message }))
+} catch (error) {
+  res.status(400).send({ message: error.message })
+}
 }
 
 exports.updateInstrumento = async function (req, res, next) {

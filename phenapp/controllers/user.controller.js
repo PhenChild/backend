@@ -24,14 +24,18 @@ exports.updateUser = async function (req, res, next) {
 }
 
 exports.getAll = async function (req, res, next) {
-  await user.findAll({
-    where: { enable: true },
-    attributes: { exclude: ['enable', 'password'] }
-  })
-    .then(user => {
-      res.json(user)
+  try {
+    await user.findAll({
+      where: { enable: true },
+      attributes: { exclude: ['enable', 'password'] }
     })
-    .catch(err => res.status(419).send({ message: err.message }))
+      .then(user => {
+        res.json(user)
+      })
+      .catch(err => res.status(419).send({ message: err.message }))
+  } catch (error) {
+    res.status(400).send({ message: error.message })
+  }
 }
 
 exports.disableUser = async function (req, res, next) {

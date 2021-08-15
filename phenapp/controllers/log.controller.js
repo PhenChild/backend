@@ -2,6 +2,7 @@
 const log = require('../models').Log
 
 exports.getAll = async function (req, res, next) {
+  try{
   await log.findAll({
     where: { enable: true }
   })
@@ -9,9 +10,13 @@ exports.getAll = async function (req, res, next) {
       res.json(logs)
     })
     .catch(err => res.json(err))
+  } catch (error) {
+    res.status(400).send({ message: error.message })
+  }
 }
 
 exports.newLog = async function (req, res, next) {
+  try{
   console.log(req.body)
   await log.create({
     idRegistro: req.body.registro,
@@ -23,4 +28,7 @@ exports.newLog = async function (req, res, next) {
   }).then(log => {
     res.status(200).send({ message: 'Succesfully created' })
   }).catch(err => res.status(419).send({ message: err.message }))
+} catch (error) {
+  res.status(400).send({ message: error.message })
+}
 }

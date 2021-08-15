@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "f() { if [ '$NODE_ENV' = 'production' ]; then node ./bin/www; else nodemon ./bin/www; fi; }; f"
+    "start": "f() { if [ '$NODE_ENV' = 'production' ]; then node ./bin/www --unhandled-rejections=strict; else nodemon ./bin/www --unhandled-rejections=strict; fi; }; f"
   },
   "dependencies": {
     "@prisma/client": "^2.22.1",

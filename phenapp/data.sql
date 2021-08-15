@@ -33,11 +33,11 @@ values
 
 INSERT INTO public."Observador"
 ("createdAt", "updatedAt", "EstacionCodigo", "UserId")
-VALUES(pg_catalog.now(),pg_catalog.now(), 'EST1064', '573e924a-b029-4205-a34d-c948690e7c8a');
+VALUES(pg_catalog.now(),pg_catalog.now(), 'EST1064', 'e06ab791-1c0a-4f56-ba47-45f2748a7b07');
 
 INSERT INTO public."Observador"
 ("createdAt", "updatedAt", "EstacionCodigo", "UserId")
-VALUES(pg_catalog.now(),pg_catalog.now(), 'EST1064', 'babe5ba2-2867-413b-b8d8-2952a569fc45');
+VALUES(pg_catalog.now(),pg_catalog.now(), 'EST1064', 'ec59c40b-ea52-4fe3-9e4d-bb0ca21f5ddd');
 
 INSERT INTO public."Horario"
 ("tipoHora", hora, "createdAt", "updatedAt")
@@ -63,7 +63,7 @@ INSERT INTO public."TipoInstrumento"
 (tipo, "createdAt", "updatedAt")
 VALUES('Veleta', pg_catalog.now(),pg_catalog.now());
 
------
+-----HASTA AQUI UN SEGUNDO CORTE
 INSERT INTO public."Instrumento"
 (codigo, nombre, "createdAt", "updatedAt", "EstacionCodigo", "TipoInstrumentoId")
 VALUES('ISC001', 'Termometro Humedo Mercurio', pg_catalog.now(),pg_catalog.now(), 'EST1064',1);
@@ -106,7 +106,7 @@ INSERT INTO public."Variable"
 VALUES('Percepcion Calor', 'Seleccione su percepcion sobre el calor del ambiente en la escala del 1 al 5, 1 representa poco intenso y 5 extramademente intenso', 'clima', 'likert', pg_catalog.now(),pg_catalog.now());
 
 
-------------
+------------AQUI EL TERCER CORTE
 INSERT INTO public."VariableEstacion"
 ("enable", "EstacionCodigo", "VariableId", "HorarioId", "InstrumentoCodigo", "createdAt", "updatedAt")
 VALUES(true, 'EST1064', 3, 2, 'ISC003', pg_catalog.now(),pg_catalog.now());
@@ -146,9 +146,23 @@ VALUES(true, 'EST1064', 2, 2, 'ISC002', pg_catalog.now(),pg_catalog.now());
 INSERT INTO public."VariableEstacion"
 ("enable", "EstacionCodigo", "VariableId", "HorarioId", "InstrumentoCodigo", "createdAt", "updatedAt")
 VALUES(true, 'EST1064', 2, 1, 'ISC001', pg_catalog.now(),pg_catalog.now());
- 
+
+---------CUARTO CORTE
+INSERT INTO public."ObservacionVariable"
+("valor", "VariableEstacionId", "ObservadorId", "fechaObservacion", "createdAt", "updatedAt")
+VALUES('2', 6, 1, pg_catalog.now(),pg_catalog.now(), pg_catalog.now());
+
+INSERT INTO public."ObservacionVariable"
+("valor", "VariableEstacionId", "ObservadorId", "fechaObservacion", "createdAt", "updatedAt")
+VALUES('28.5', 7, 1, pg_catalog.now(),pg_catalog.now(),pg_catalog.now());
+
+INSERT INTO public."ObservacionVariable"
+("valor", "VariableEstacionId", "ObservadorId", "fechaObservacion", "createdAt", "updatedAt")
+VALUES('500', 9, 1, pg_catalog.now(),pg_catalog.now(),pg_catalog.now());
+
 --UPDATE public."User" SET "password"='$2y$12$u5VFrmOxhrimpCr58fWuW.QWvKntHMj5LAb7L.1ec4kmH/iH8P5r.' WHERE id = 'ce596202-12f1-4b3f-9dbf-0fbe81c082c7'::uuid;
 --
 --UPDATE public."User" SET "role"='observer'::"enum_User_role" WHERE id='d2ddffa6-4469-4152-a45a-2bddf79815fe'::uuid;
 --
 --SELECT "id", "email", "password", "nombre", "apellido", "telefono", "role", "createdAt", "updatedAt" FROM "User" AS "User" WHERE "User"."email" = 'lczambra@email' AND "User"."password" = '1234'  LIMIT 1;
+
