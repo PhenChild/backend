@@ -10,24 +10,7 @@ services:
         - POSTGRES_USER=$DB_USER
         - POSTGRES_PASSWORD=$DB_PASSWORD
         - POSTGRES_DB=postgres
-    networks:
-        - phen-network
     volumes:
         - postgres:$DB_CONTAINER_PATH
-  backendphen:
-    build:
-        context: ../
-        dockerfile:  ./docker_db/phen.Dockerfile
-    depends_on:
-        - db
-    container_name: nodephen
-    restart: unless-stopped
-    networks:
-        - phen-network
-    ports:
-        - '3000:3000'
-networks:
-    phen-network:
-        driver: bridge
 volumes:
   postgres:
